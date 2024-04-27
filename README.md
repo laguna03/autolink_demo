@@ -26,11 +26,11 @@
 
 <!-- Status -->
 
-<!-- <h4 align="center"> 
+ <h4 align="center"> 
 	🚧  Autolink_demo 🚀 Under construction...  🚧
 </h4> 
 
-<hr> -->
+<hr>
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
@@ -46,7 +46,7 @@
 
 ## :dart: About ##
 
-Describe your project
+🚧  Autolink_demo 🚀 Under construction...  🚧
 
 ## :sparkles: Features ##
 
