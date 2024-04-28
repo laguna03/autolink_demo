@@ -5,6 +5,7 @@ import uuid
 from datetime import datetime, date
 from app.settings.application import get_settings
 from app.settings.logger import get_logger
+from fastapi import HTTPException
 
 # Create instance of FastAPI
 app = APIRouter()
@@ -31,18 +32,26 @@ class Agent(BaseModel):
 #Create agent
 @app.post("/agents/")
 def create_agent(agent: Agent):
-    query = "INSERT INTO agent (id, updated_at, first_name, last_name, email, employee_num) VALUES (%s, %s, %s, %s, %s, %s)"
-    cur.execute(query, (agent.id, agent.updated_at, agent.first_name, agent.last_name, agent.email, agent.employee_num))
-    conn.commit()
-    return {"message": "Agent created successfully"}
-
+    try:
+        query = "INSERT INTO agent (id, updated_at, first_name, last_name, email, employee_num) VALUES (%s, %s, %s, %s, %s, %s)"
+        cur.execute(query, (agent.id, agent.updated_at, agent.first_name, agent.last_name, agent.email, agent.employee_num))
+        conn.commit()
+        return {"message": "Agent created successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    
 #Read agent
 @app.get("/agents/{agent_id}")
 def read_agent(agent_id: uuid):
-    query = "SELECT * FROM agent WHERE id = %s"
-    cur.execute(query, (agent_id,))
-    agent = cur.fetchone()
-    return agent
+    try:
+        query = "SELECT * FROM agent WHERE id = %s"
+        cur.execute(query, (agent_id,))
+        agent = cur.fetchone()
+        if agent is None:
+            raise HTTPException(status_code=404, detail="Agent not found")
+        return agent
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 #Update agent
 @app.put("/agents/{agent_id}")
