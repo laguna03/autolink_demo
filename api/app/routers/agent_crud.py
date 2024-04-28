@@ -1,23 +1,21 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 from pydantic import BaseModel
 import psycopg2
 import uuid
 from datetime import datetime, date
+from app.settings.application import get_settings
+from app.settings.logger import get_logger
 
 # Create instance of FastAPI
-app = FastAPI()
+app = APIRouter()
 
-# Establish connection to database
-conn = psycopg2.connect(
-    dbname="autolinkdb",
-    user="pedrolaguna",
-    password="autolink2024",
-    host="localhost",
-    port="5432"
-)
+#Connect to database
+logger = get_logger()
+settings = get_settings()
 
-#create cursor to execute consults
+conn = settings
 cur = conn.cursor()
+
 
 #Define models Pydantic for create, read, update and delete
 class Agent(BaseModel):
