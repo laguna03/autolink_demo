@@ -39,7 +39,7 @@ def create_agent(agent: Agent):
         return {"message": "Agent created successfully"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
 #Read agent
 @app.get("/agents/{agent_id}")
 def read_agent(agent_id: uuid):

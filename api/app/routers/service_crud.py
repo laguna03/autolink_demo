@@ -1,23 +1,17 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-import psycopg2
+from datetime import datetime
+from app.settings.application import get_settings
 
 # Create instance of FastAPI
-app = FastAPI()
+router = APIRouter()
 
 # Establish connection to database
-conn = psycopg2.connect(
-    dbname="autolinkdb",
-    user="pedrolaguna",
-    password="autolink2024",
-    host="localhost",
-    port="5432"
-)
-
-#create cursor to execute consults
+settings = get_settings()
+conn = settings
 cur = conn.cursor()
 
-#Define models Pydantic for create, read, update and delete
+# Define models Pydantic for create, read, update, and delete
 class Service(BaseModel):
     id: int
     service_name: str
@@ -25,36 +19,54 @@ class Service(BaseModel):
     service_duration: int
     service_price: float
 
-#CRUD operations for service table
+# CRUD operations for service table
 
-#Create service
-@app.post("/services/")
+# Create service
+@router.post("/services/")
 def create_service(service: Service):
-    query = "INSERT INTO service (id, service_name, service_description, service_duration, service_price) VALUES (%s, %s, %s, %s, %s)"
-    cur.execute(query, (service.id, service.service_name, service.service_description, service.service_duration, service.service_price))
-    conn.commit()
-    return {"message": "Work order created successfully"}
+    try:
+        query = "INSERT INTO service (id, service_name, service_description, service_duration, service_price) VALUES (%s, %s, %s, %s, %s)"
+        cur.execute(query, (service.id, service.service_name, service.service_description, service.service_duration, service.service_price))
+        conn.commit()
+        return {"message": "Work order created successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-#Read service
-@app.get("/services/{service_id}")
+# Read service
+@router.get("/services/{service_id}")
 def read_service(service_id: int):
-    query = "SELECT * FROM service WHERE id = %s"
-    cur.execute(query, (service_id,))
-    service = cur.fetchone()
-    return service
+    try:
+        query = "SELECT * FROM service WHERE id = %s"
+        cur.execute(query, (service_id,))
+        service = cur.fetchone()
+        if service is None:
+            raise HTTPException(status_code=404, detail="Work order not found")
+        return service
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-#Update service
-@app.put("/services/{service_id}")
+# Update service
+@router.put("/services/{service_id}")
 def update_service(service_id: int, service: Service):
-    query = "UPDATE service SET service_name = %s, service_description = %s, service_duration = %s, service_price = %s WHERE id = %s"
-    cur.execute(query, (service.service_name, service.service_description, service.service_duration, service.service_price, service_id))
-    conn.commit()
-    return {"message": "Work order updated successfully"}
+    try:
+        query = "UPDATE service SET service_name = %s, service_description = %s, service_duration = %s, service_price = %s WHERE id = %s"
+        cur.execute(query, (service.service_name, service.service_description, service.service_duration, service.service_price, service_id))
+        conn.commit()
+        return {"message": "Work order updated successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-#Delete service
-@app.delete("/services/{service_id}")
+# Delete service
+@router.delete("/services/{service_id}")
 def delete_service(service_id: int):
-    query = "DELETE FROM service WHERE id = %s"
-    cur.execute(query, (service_id,))
-    conn.commit()
-    return {"message": "Work order deleted successfully"}
+    try:
+        query = "DELETE FROM service WHERE id = %s"
+        cur.execute(query, (service_id,))
+        conn.commit()
+        return {"message": "Work order deleted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+# Close cursor and connection
+cur.close()
+conn.close()
