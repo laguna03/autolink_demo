@@ -1,5 +1,16 @@
 from sys import prefix
+from app.routers.agent_crud import router as agent_router
+from app.routers.appointment_crud import router as appointment_router
+from app.routers.client_crud import router as client_router
+from app.routers.service_crud import router as service_router
+from app.routers.vehicle_crud import router as vehicle_router
+from app.routers.sales_crud import router as sales_router
 
 
 def add_routers(app):
-    app.include_router(detect_router, prefix="/detect", tags=["Object detection API"])
+    app.include_router(agent_router, prefix="/agent", tags=["Agents"])
+    app.include_router(appointment_router, prefix="/", tags=[""])
+    app.include_router(client_router, prefix="/", tags=[""])
+    app.include_router(service_router, prefix="/", tags=[""])
+    app.include_router(vehicle_router, prefix="/", tags=[""])
+    app.include_router(sales_router, prefix="/", tags=[""])
