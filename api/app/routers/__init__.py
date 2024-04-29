@@ -9,8 +9,8 @@ from app.routers.sales_crud import router as sales_router
 
 def add_routers(app):
     app.include_router(agent_router, prefix="/agent", tags=["Agents"])
-    app.include_router(appointment_router, prefix="/", tags=[""])
-    app.include_router(client_router, prefix="/", tags=[""])
-    app.include_router(service_router, prefix="/", tags=[""])
-    app.include_router(vehicle_router, prefix="/", tags=[""])
-    app.include_router(sales_router, prefix="/", tags=[""])
+    app.include_router(appointment_router, prefix="/appointment", tags=["Appointments"])
+    app.include_router(client_router, prefix="/client", tags=["Clients"])
+    app.include_router(service_router, prefix="/service", tags=["Services"])
+    app.include_router(vehicle_router, prefix="/vehicle", tags=["Vehicles"])
+    app.include_router(sales_router, prefix="/sales", tags=["Sales"])
