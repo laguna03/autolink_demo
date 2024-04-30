@@ -16,7 +16,7 @@ init_logger()
 settings = application_settings()
 
 app = FastAPI(
-    title="AutoLink",  # TODO: change the name of the project
+    title="AutoLink",
     description=f"<b>Environment:</b> {settings.environment_name}<br><b>Version:</b> {settings.app_version}<br><b>Release Date:</b> {settings.app_release_date}<br><b>Starting Date:</b> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
     openapi_url="/openapi.json",
     docs_url="/docs",
