@@ -8,12 +8,12 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import add_routers
-from app.routers.dependencies import application_settings
+from app.settings.application import get_settings
 from app.settings.logger import init_logger
 
 init_logger()
 
-settings = application_settings()
+settings = get_settings()
 
 app = FastAPI(
     title="AutoLink",
