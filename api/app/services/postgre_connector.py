@@ -5,8 +5,8 @@ def connect_to_database():
         # Establish connection to the PostgreSQL database
         conn = psycopg2.connect(
             dbname="autolinkdb",
-            user="user",
-            password="password",
+            user="manuel",
+            password="mitsubishi",
             host="localhost",
             port="5432"
         )
