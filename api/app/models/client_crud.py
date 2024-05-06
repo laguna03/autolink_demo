@@ -1,11 +1,11 @@
 from fastapi import HTTPException
-from pydantic import UUID4, BaseModel
+from pydantic import BaseModel
 from app.services import postgre_connector
 from datetime import datetime, date
 from uuid import UUID
 
 class ClientData(BaseModel):
-    id: UUID4
+    id: UUID
     updated_at: datetime
     first_name: str
     last_name: str
@@ -41,11 +41,19 @@ def read_client(client_id):
     try:
         cur = conn.cursor()
         query = "SELECT * FROM clients WHERE id = %s"
-        cur.execute(query, (client_id,))
+        cur.execute(query, (str(client_id),))
         client = cur.fetchone()
         if client is None:
             raise HTTPException(status_code=404, detail="Client not found")
-        return client
+        return ClientData(
+            id=client[0],
+            updated_at=client[1],
+            first_name=client[2],
+            last_name=client[3],
+            email=client[4],
+            phone=client[5],
+            date_of_birth=client[6]
+        )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     finally:
@@ -65,7 +73,7 @@ def update_client(client_id, client_data):
             client_data.email,
             client_data.phone,
             client_data.date_of_birth,
-            client_id
+            str(client_id)
         ))
         conn.commit()
     except Exception as e:
@@ -80,7 +88,7 @@ def delete_client(client_id):
     try:
         cur = conn.cursor()
         query = "DELETE FROM clients WHERE id = %s"
-        cur.execute(query, (client_id,))
+        cur.execute(query, (str(client_id),))
         conn.commit()
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
