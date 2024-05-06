@@ -1,4 +1,4 @@
-from app.models.client_crud import create_client, read_client, update_client, delete_client, ClientData
+from app.models.client_operations import create_client, read_client, update_client, delete_client, ClientData
 from fastapi import APIRouter
 from uuid import UUID
 
