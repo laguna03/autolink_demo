@@ -5,8 +5,8 @@ def connect_to_database():
         # Establish connection to the PostgreSQL database
         conn = psycopg2.connect(
             dbname="autolinkdb",
-            user="user",
-            password="password",
+            user="manuel",
+            password="mitsubishi",
             host="localhost",
             port="5432"
         )
@@ -17,6 +17,7 @@ def connect_to_database():
         return None
 
 def close_connection(conn):
+    # Close the connection
     if conn:
         conn.close()
         print("Connection to the database closed")
