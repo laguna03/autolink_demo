@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from pydantic import BaseModel
 from app.services import postgre_connector
-from datetime import datetime, date
+from datetime import datetime
 from uuid import UUID
 
 
