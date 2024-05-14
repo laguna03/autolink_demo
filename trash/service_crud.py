@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from datetime import datetime
-from app.settings.application import get_settings
+
 
 # Create instance of FastAPI
 router = APIRouter()
