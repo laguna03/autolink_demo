@@ -1,18 +1,6 @@
 from fastapi import HTTPException
-from pydantic import BaseModel
 from app.services import postgre_connector
-from datetime import datetime, date
-from uuid import UUID
-
-class ClientData(BaseModel):
-    id: UUID
-    updated_at: datetime
-    first_name: str
-    last_name: str
-    email: str
-    phone: str
-    date_of_birth: date
-
+from models.classes.client_class import ClientData
 
 def create_client(client_data):
     conn = postgre_connector.connect_to_database()

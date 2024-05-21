@@ -1,15 +1,7 @@
 from fastapi import HTTPException
-from pydantic import BaseModel
 from app.services import postgre_connector
-from datetime import datetime, date
-from uuid import UUID
+from models.classes.service_class import ServiceData
 
-class ServiceData(BaseModel):
-    id: int
-    service_name: str
-    service_description: str
-    service_duration: int
-    service_price: float
 
 def create_service(service_data):
     conn = postgre_connector.connect_to_database()

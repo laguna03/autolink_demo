@@ -1,18 +1,7 @@
 from fastapi import HTTPException
-from pydantic import BaseModel
 from app.services import postgre_connector
-from datetime import datetime, date
 from uuid import UUID
-
-class VehicleData(BaseModel):
-    id: int
-    client_id: UUID
-    license_plate: str
-    vin_number: str
-    make: str
-    milage: int
-    model: str
-    year: int
+from models.classes.vehicle_class import VehicleData
 
 
 def create_vehicle(vehicle_data):

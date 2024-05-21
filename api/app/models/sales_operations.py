@@ -1,16 +1,7 @@
 from fastapi import HTTPException
-from pydantic import BaseModel
 from app.services import postgre_connector
-from datetime import datetime
-from uuid import UUID
+from models.classes.sales_class import Sale
 
-class Sale(BaseModel):
-    id: int
-    service_id: int
-    agent_id: UUID
-    status: str
-    updated_at: datetime
-    final_price: float
 
 def create_sale(sale_data):
     conn = postgre_connector.connect_to_database()
