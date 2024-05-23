@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from app.services import postgre_connector
 from uuid import UUID
-from models.classes.vehicle_class import VehicleData
+from .classes.vehicle_class import VehicleData
 
 
 def create_vehicle(vehicle_data):

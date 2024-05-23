@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from app.services import postgre_connector
-from models.classes.client_class import ClientData
+from .classes.client_class import ClientData, ClientResponse
+
 
 def create_client(client_data):
     conn = postgre_connector.connect_to_database()
@@ -56,21 +57,19 @@ def read_client(client_id=None, first_name=None, last_name=None, email=None, pho
     conn = postgre_connector.connect_to_database()
     try:
         cur = conn.cursor()
-        query = "SELECT * FROM clients"
+        query = "SELECT first_name, last_name, email, phone, date_of_birth FROM clients"
         if where_clause:
             query += " WHERE " + where_clause
         cur.execute(query, tuple(params))
         clients = cur.fetchall()
         if not clients:
             raise HTTPException(status_code=404, detail="Clients not found")
-        return [ClientData(
-            id=client[0],
-            updated_at=client[1],
-            first_name=client[2],
-            last_name=client[3],
-            email=client[4],
-            phone=client[5],
-            date_of_birth=client[6]
+        return [ClientResponse(
+            first_name=client[0],
+            last_name=client[1],
+            email=client[2],
+            phone=client[3],
+            date_of_birth=client[4]
         ) for client in clients]
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
