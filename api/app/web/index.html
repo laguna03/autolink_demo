@@ -148,16 +148,19 @@
     </div>
     <script>
         var button = document.getElementById('toggle-sidebar');
-        var buttonImage = button.querySelector('img');
+        var buttonImage = button.querySelector('.button-image');
+        var buttonImageClicked = button.querySelector('.button-image-clicked');
 
         button.addEventListener('click', function() {
             var sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('open');
 
             if (sidebar.classList.contains('open')) {
-                buttonImage.src = 'dashboard_button_clicked.png';
+                buttonImage.style.display = 'none';
+                buttonImageClicked.style.display = 'block';
             } else {
-                buttonImage.src = 'dashboard_button.png';
+                buttonImage.style.display = 'block';
+                buttonImageClicked.style.display = 'none';
             }
         });
     </script>
