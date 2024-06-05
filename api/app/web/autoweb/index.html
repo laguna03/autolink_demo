@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Sales Report</a>
+        <a href="#">Appointments</a>
+        <a href="#">Units</a>
+        <a href="#">Clients</a>
+        <a href="login.html" class="logout">Log out</a>
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <h1>AutoLink</h1>
+            <img src="logo.png" alt="AutoLink Logo" width="50">
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <h2>24</h2>
+                <p>Appointments</p>
+            </div>
+            <div class="stat-box">
+                <h2>12</h2>
+                <p>Visits</p>
+            </div>
+            <div class="stat-box">
+                <h2>3</h2>
+                <p>No Show</p>
+            </div>
+            <div class="stat-box">
+                <h2>3,672</h2>
+                <p>Sales</p>
+            </div>
+            <div class="stat-box">
+                <h2>7</h2>
+                <p>Queue</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="queue-table">
+                <thead>
+                    <tr>
+                        <th>Queue</th>
+                        <th>ET</th>
+                        <th>Service Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+
+            <table id="clients-table">
+                <thead>
+                    <tr>
+                        <th>Clients</th>
+                        <th>License Plate</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
