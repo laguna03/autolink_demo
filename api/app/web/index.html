@@ -18,8 +18,8 @@
 
     <div class="content">
         <div class="header">
-            <h1>AutoLink</h1>
-            <img src="logo_web.png" alt="AutoLink Logo" width="50">
+            <h1><button id="toggle-sidebar" class="toggle-button"><img src="dashboard_button.png" alt="dashboard_button" class="button-image"><img src="dashboard_button_clicked.png" alt="dashboard_button_clicked" class="button-image-clicked"></button></h1>
+            <img src="logo_white_al.png" alt="AutoLink Logo" class="logo">
         </div>
 
         <div class="stats">
@@ -146,5 +146,20 @@
             </table>
         </div>
     </div>
+    <script>
+        var button = document.getElementById('toggle-sidebar');
+        var buttonImage = button.querySelector('img');
+
+        button.addEventListener('click', function() {
+            var sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('open');
+
+            if (sidebar.classList.contains('open')) {
+                buttonImage.src = 'dashboard_button_clicked.png';
+            } else {
+                buttonImage.src = 'dashboard_button.png';
+            }
+        });
+    </script>
 </body>
 </html>
