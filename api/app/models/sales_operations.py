@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from app.services import postgre_connector
-from models.classes.sales_class import Sale
+from .classes.sales_class import Sale
 
 
 def create_sale(sale_data):

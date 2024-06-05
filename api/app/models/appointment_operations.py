@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from app.services import postgre_connector
-from models.classes.appointment_class import AppointmentData
+from .classes.appointment_class import AppointmentData
 
 
 def create_appointment(appointment_data: AppointmentData):

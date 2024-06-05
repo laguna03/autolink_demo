@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from app.services import postgre_connector
-from models.classes.service_class import ServiceData
+from .classes.service_class import ServiceData
 
 
 def create_service(service_data):
