@@ -1,4 +1,4 @@
-from app.models.client_operations import create_client, read_client, update_client, delete_client, ClientData
+from app.models.client_operations import create_client, read_client, update_client, delete_client, ClientData, ClientResponse
 from fastapi import APIRouter, HTTPException
 from uuid import UUID
 from typing import List
@@ -12,7 +12,7 @@ async def create_client_endpoint(client_data: ClientData) -> dict:
     return {"message": "Client created successfully"}
 
 @router.get("/")
-async def read_client_endpoint(client_id: UUID = None, first_name: str = None, last_name: str = None, email: str = None, phone: str = None) -> List[ClientData]:
+async def read_client_endpoint(client_id: UUID = None, first_name: str = None, last_name: str = None, email: str = None, phone: str = None) -> List[ClientResponse]:
     return read_client(client_id=client_id, first_name=first_name, last_name=last_name, email=email, phone=phone)
 
 @router.put("/{client_id}")

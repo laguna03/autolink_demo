@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from app.services import postgre_connector
 from uuid import UUID
 from typing import List, Optional
-from models.classes.agent_class import AgentData
+from .classes.agent_class import AgentData
 
 
 def create_agent(agent_data: AgentData):
