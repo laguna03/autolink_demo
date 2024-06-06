@@ -90,6 +90,9 @@ body {
 }
 
 .header {
+    width: 100%;
+    top: 0;
+    left:0;
     background-color: #0000ff;
     color: white;
     padding: 10px;
@@ -99,12 +102,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: absolute;
     border-radius: 0 0 10px 10px;
 }
 
 .logo {
-    right: -55px;
+    right: -35px;
     width: 300px; /* Adjust this value to the size you want */
     height: auto;
     animation: rotateIn 1s forwards;
@@ -112,6 +115,9 @@ body {
 }
 
 .stats {
+    align-items: center;
+    height: 30%;
+    margin: 20x 0;
     display: flex;
     justify-content: space-around;
     margin: 20px 0;
@@ -125,7 +131,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 150px;
+    width: 100px; /* Decrease this value to make the boxes smaller */
     transition: transform 0.3s;
 }
 
@@ -141,7 +147,7 @@ table {
     width: 100%;
     background-color: white;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin-top: 10px;
 }
 
 th, td {
@@ -153,6 +159,7 @@ th, td {
 th {
     background-color: #0000ff;
     color: white;
+    border-radius: 10px 10px 0 0;
 }
 
 select {
