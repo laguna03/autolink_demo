@@ -5,12 +5,12 @@ body {
     height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #eaeaf9;
 }
 
 header {
     top: -150px;
-    left: -350px;
+    left: -430px;
     position: absolute;
     width: 100%;
     text-align: left;
