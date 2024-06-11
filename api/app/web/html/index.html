@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="sidebar">
+        <button class="minimize-button">Minimize</button>
         <a href="#" class="active">Dashboard</a>
         <a href="#">Sales Report</a>
         <a href="#">Appointments</a>
@@ -18,7 +19,7 @@
 
     <div class="content">
         <div class="header">
-            <h1><button id="toggle-sidebar" class="toggle-button"><img src="../images/dashboard_button.png" alt="dashboard_button" class="button-image"><img src="../images/dashboard_button_clicked.png" alt="dashboard_button_clicked" class="button-image-clicked"></button></h1>
+            <h1></h1>
             <img src="../images/logo_white_al.png" alt="AutoLink Logo" class="logo">
         </div>
 
@@ -96,7 +97,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Clients</th>
+                        <th>Appointments</th>
                         <th>License Plate</th>
                         <th>Date</th>
                     </tr>
@@ -147,21 +148,8 @@
         </div>
     </div>
     <script>
-        var button = document.getElementById('toggle-sidebar');
-        var buttonImage = button.querySelector('.button-image');
-        var buttonImageClicked = button.querySelector('.button-image-clicked');
-
-        button.addEventListener('click', function() {
-            var sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('open');
-
-            if (sidebar.classList.contains('open')) {
-                buttonImage.style.display = 'none';
-                buttonImageClicked.style.display = 'block';
-            } else {
-                buttonImage.style.display = 'block';
-                buttonImageClicked.style.display = 'none';
-            }
+        document.querySelector('.minimize-button').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('minimized');
         });
     </script>
 </body>
