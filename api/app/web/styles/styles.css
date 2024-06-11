@@ -62,7 +62,23 @@ body {
     display: none;
 }
 
-.sidebar a:hover {
+.sidebar .active:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .sales-report-button:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .appointments-button:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .units-button:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .clients-button:hover {
     background-color: #93aef9;
 }
 
@@ -77,7 +93,6 @@ body {
     position: absolute;
     bottom: 20px;
     left: 20px;
-    color: #0000ff;
 }
 
 .logout-button {
@@ -92,6 +107,10 @@ body {
 .logout-button-img {
     width: 25px;
     height: 25px;
+}
+
+.sidebar .logout-button-img:hover {
+    color: transparent;
 }
 
 .toggle-button {
