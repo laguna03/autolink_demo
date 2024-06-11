@@ -12,11 +12,18 @@ body {
     top: 60px;
     width: 250px;
     height: 100%;
-    background-color: #d2d2de;
+    background-color: #f3f6fa;
     padding-top: 20px;
-    position: fixed;
+    position: relative;
     animation: slideIn 0.8s forwards;
-    transition: left 0.8s ease;
+    transition: width 0.8s ease;
+    z-index: 0;
+    border-radius: 5%;
+}
+
+.sidebar.minimized {
+    width: 50px;
+    transition: width 0.8s ease; /* Add this line */
 }
 
 .sidebar a {
@@ -27,14 +34,24 @@ body {
     font-size: 18px;
     opacity: 0;
     animation: fadeIn 0.5s forwards 0.5s;
+    margin-top: 20px;
 }
 
 .minimize-button {
     margin-bottom: 20px;
     position: absolute;
     top: 10px;
-    right: 10px;
-    /* add any other styles you want for the button */
+    right: 35px;
+    width: 2px;
+    height: 2px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.minimize-button-img {
+    width: 25px;
+    height: 25px;
 }
 
 .sidebar.minimized {
@@ -63,6 +80,20 @@ body {
     color: #0000ff;
 }
 
+.logout-button {
+    width: 2px;
+    height: 2px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.logout-button-img {
+    width: 25px;
+    height: 25px;
+}
+
 .toggle-button {
     position: absolute;
     left: 20px;
@@ -89,13 +120,14 @@ body {
 }
 
 .content {
-    margin-left: 250px;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    margin-left: 20px;
+   overflow: auto;
+    scrollbar-width: none;
     padding: 20px;
     height: 100vh;
     width: 100%;
     transition: transform 0.5s ease;
+    flex-grow: 1;
 }
 
 .header {
