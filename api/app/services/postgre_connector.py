@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import psycopg2
 
 def connect_to_database():
@@ -5,8 +6,8 @@ def connect_to_database():
         # Establish connection to the PostgreSQL database
         conn = psycopg2.connect(
             dbname="autolinkdb",
-            user="pedrolaguna",
-            password="autolink2024",
+            user="manuel",
+            password="mitsubishi",
             host="localhost",
             port="5432"
         )
