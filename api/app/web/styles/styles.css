@@ -39,6 +39,15 @@ body {
     margin-top: 20px;
 }
 
+.sidebar-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+}
+
 .sidebar-button {
     margin-bottom: 20px;
     position: relative;
@@ -53,7 +62,7 @@ body {
 .minimize-button {
     position: absolute;
     top: 55px;
-    left: 20px;
+    left: 100px;
     background: none;
     border: none;
     padding: 0;
@@ -65,7 +74,7 @@ body {
 .minimize-button-img {
     width: 70px;
     height: 35px;
-    display: block ;
+    display: block;
 }
 
 .maximize-button-img {
@@ -121,13 +130,13 @@ body {
 
 .sidebar .logout {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    bottom: 55px;
+    left: -20px;
 }
 
 .logout-button {
-    width: 2px;
-    height: 2px;
+    width: 10px;
+    height: 10px;
     background: none;
     border: none;
     padding: 0;
@@ -135,8 +144,8 @@ body {
 }
 
 .logout-button-img {
-    width: 25px;
-    height: 25px;
+    width: 100px;
+    height: 60px;
 }
 
 .sidebar .logout-button-img:hover {
