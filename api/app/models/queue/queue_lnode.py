@@ -1,50 +1,90 @@
 #!/usr/bin/env python3
 
 
-#linked list node to store a queue entry
+# linked list node to store a queue entry
 class Node:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self, item):
+        self.data = item
         self.next = None
 
-#class for queue
+
+# A class to represent a queue
 class Queue:
-
-    #constructor for queue
     def __init__(self):
-        self.front = self.rear = None
+        self.front = None
+        self.rear = None
 
-    # method to check if the queue is empty
-    def isEmpty(self):
-        return self.front == None
+    # Method to add an item to the queue
+    def EnQueue(self):
+        item = input("Enter the element to be added to the queue: ")
+        new_node = Node(item)
+        if self.rear == None:
+            self.front = new_node
+            self.rear = new_node
+        else:
+            self.rear.next = new_node
+            self.rear = new_node
 
-    #method to add an item to the queue
-    def EnQueue(self, item):
-        temp = Node(item) #create a new LL node
+    # Method to remove an item from the queue
+    def DeQueue(self, item):
+        if self.front == None:
+            print("Queue is empty")
+        elif self.front.next == item:
+            print("Dequeued item is: ", self.front.data)
+            print("-------------------------")
+            self.front = self.front.next
+        else:
+            prev = self.front
+            temp = self.front.next
+            while temp is not None and temp.data != item:
+                prev = temp
+                temp = temp.next
+            if temp is None:
+                print("Item not found in the queue")
+            else:
+                print("Dequeued item is: ", temp.data)
+                print("-------------------------")
+                prev.next = temp.next
+                if temp == self.rear:
+                    self.rear = prev
 
-        if self.rear == None: #check if the queue is empty
-            self.front = self.rear = temp #if the queue is empty, then both front and rear are the new node
-            return
-        self.rear.next = temp #add the new node to the rear of the queue
-        self.rear = temp #update the rear of the queue
 
-    #method to remove an item from the queue
-    def DeQueue(self):
-        if self.isEmpty(): #check if the queue is empty
-            return
-        temp = self.front #store the front node
-        self.front = temp  = temp.next #update the front node and remove the previous front node
+    # Method to display the queue
+    def Display(self):
+        if self.front is None:
+            print("Queue is empty")
+        else:
+            print("Queue is: ")
+            temp = self.front
+            while temp:
+                print(temp.data, end="\n")
+                temp = temp.next
+            print("front:", self.front.data, end="\n")
+            print("rear:", self.rear.data, end="\n")
+            print("-------------------------", end="\n")
 
-        if (self.front == None): #check if the queue is empty after removing the front node
-            self.rear = None #if the queue is empty, update the rear node
 
-#driver code
-if __name__ == '__main__':
-    q = Queue()
-    q.EnQueue("Luis")
-    q.EnQueue("Miguel")
-    q.EnQueue("Carlos")
-    q.EnQueue("Juan")
-
-    print("Queue Front: " + str(q.front.data if q.front != None else -1))
-    print("Queue Rear: " + str(q.rear.data if q.rear != None else -1))
+# Driver code
+q = Queue()
+while 1:
+    print("Enter option: ")
+    print("1-Enqueue\n2-Dequeue\n3-Display\n4-Exit\n")
+    print("-------------------------")
+    option = int(input())
+    if option == 1:
+        print("Enqueued")
+        print("-------------------------")
+        q.EnQueue()
+    elif option == 2:
+        item = input("Enter the element to be removed from the queue: ")
+        print("Dequeued")
+        print("-------------------------")
+        q.DeQueue (item)
+    elif option == 3:
+        print("Display")
+        q.Display()
+    elif option == 4:
+        break
+    else:
+        print("Invalid option")
+        print("-------------------------")
