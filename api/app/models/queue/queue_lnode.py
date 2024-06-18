@@ -29,7 +29,7 @@ class Queue:
     def DeQueue(self, item):
         if self.front == None:
             print("Queue is empty")
-        elif self.front.next == item:
+        elif self.front.next == item: # No deja que borre el primero en el Q
             print("Dequeued item is: ", self.front.data)
             print("-------------------------")
             self.front = self.front.next
