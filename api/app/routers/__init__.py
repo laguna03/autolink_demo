@@ -5,6 +5,7 @@ from app.routers.client_crud import router as client_router
 from app.routers.service_crud import router as service_router
 from app.routers.vehicle_crud import router as vehicle_router
 from app.routers.sales_crud import router as sales_router
+from app.routers.user_crud import router as user_router
 
 
 def add_routers(app):
@@ -14,3 +15,4 @@ def add_routers(app):
     app.include_router(service_router, prefix="/service", tags=["Services"])
     app.include_router(vehicle_router, prefix="/vehicle", tags=["Vehicles"])
     app.include_router(sales_router, prefix="/sales", tags=["Sales"])
+    app.include_router(user_router, prefix="/user", tags=["Users"])

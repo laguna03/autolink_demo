@@ -10,6 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import add_routers
 from app.settings.application import get_settings
 from app.settings.logger import init_logger
+from fastapi.staticfiles import StaticFiles
+from fastapi.security import OAuth2PasswordBearer
 
 init_logger()
 
@@ -32,6 +34,11 @@ if settings.environment_name == "local":
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+# Montar el directorio estático para servir archivos CSS, JS y de imagen
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 add_routers(app)
 

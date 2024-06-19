@@ -2,25 +2,27 @@
 import psycopg2
 from psycopg2 import sql
 from passlib.context import CryptContext
-from services import postgre_connector
+from typing import Optional
+from app.services.postgre_connector import connect_to_database, close_connection, create_cursor
 
-conn = postgre_connector.connect_to_database()
+# Datos de conexión a la base de datos
 
-# Initialize password context
+# Contexto de hash de contraseña
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Function to get password hash
+# Función para obtener el hash de una contraseña
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-# Function to verify password
+# Función para verificar una contraseña
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-# Function to initialize the database (create table)
+
+# Función para inicializar la base de datos (crear tabla)
 def init_db():
-    conn = postgre_connector.connect_to_database()
-    cur = postgre_connector.create_cursor(conn)
+    conn = connect_to_database()
+    cur = create_cursor(conn)
     if conn is not None and cur is not None:
         create_table_query = '''
         CREATE TABLE IF NOT EXISTS users (
@@ -33,16 +35,15 @@ def init_db():
         try:
             cur.execute(create_table_query)
             conn.commit()
-            print("Table created successfully")
         except (Exception, psycopg2.Error) as error:
-            print("Error creating table:", error)
+            print("Error al crear la tabla:", error)
         finally:
-            postgre_connector.close_connection(conn)
+            close_connection(conn)
 
-# Function to create a user
-def create_user(username, password, role='user'):
-    conn = postgre_connector.connect_to_database()
-    cur = postgre_connector.create_cursor(conn)
+# Función para crear un usuario
+def create_user(username, password, role='user') -> Optional[int]:
+    conn = connect_to_database()
+    cur = create_cursor(conn)
     if conn is not None and cur is not None:
         hashed_password = get_password_hash(password)
         insert_user_query = sql.SQL('''
@@ -53,17 +54,16 @@ def create_user(username, password, role='user'):
             cur.execute(insert_user_query, (username, hashed_password, role))
             conn.commit()
             user_id = cur.fetchone()[0]
-            print(f"User {username} created successfully with id {user_id}")
             return user_id
         except (Exception, psycopg2.Error) as error:
-            print("Error creating user:", error)
+            print("Error al crear usuario:", error)
         finally:
-            postgre_connector.close_connection(conn)
+            close_connection(conn)
 
-# Function to verify user login
-def verify_user(username, password):
-    conn = postgre_connector.connect_to_database()
-    cur = postgre_connector.create_cursor(conn)
+# Función para verificar el login de un usuario
+def verify_user(username, password) -> Optional[dict]:
+    conn = connect_to_database()
+    cur = create_cursor(conn)
     if conn is not None and cur is not None:
         select_user_query = sql.SQL('''
         SELECT id, hashed_password, role FROM users WHERE username = %s;
@@ -72,22 +72,13 @@ def verify_user(username, password):
             cur.execute(select_user_query, (username,))
             user = cur.fetchone()
             if user and verify_password(password, user[1]):
-                print("Login successful")
                 return {"id": user[0], "role": user[2]}
             else:
-                print("Invalid username or password")
                 return None
         except (Exception, psycopg2.Error) as error:
-            print("Error verifying user:", error)
+            print("Error al verificar usuario:", error)
         finally:
-            postgre_connector.close_connection(conn)
+            close_connection(conn)
 
-# Initialize the database (create table)
+# Inicializar la base de datos (crear tabla)
 init_db()
-
-# Example usage: create a user
-# create_user('admin', 'adminpassword', 'admin')
-
-# Example usage: verify user login
-# user_info = verify_user('admin', 'adminpassword')
-# print(user_info)
