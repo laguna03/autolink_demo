@@ -19,6 +19,7 @@ document.getElementById('login-form').addEventListener('submit', function (e) {
             document.getElementById('message').textContent = 'Login exitoso!';
             localStorage.setItem('token', data.access_token);
             // Redirigir al dashboard u otra página
+            window.location.href = '/home';
         } else {
             document.getElementById('message').textContent = 'Nombre de usuario o contraseña incorrectos';
         }

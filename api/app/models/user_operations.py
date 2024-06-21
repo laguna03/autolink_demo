@@ -28,6 +28,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             username VARCHAR(100) UNIQUE NOT NULL,
+            email VARCHAR(100) UNIQUE NOT NULL,
             hashed_password VARCHAR(255) NOT NULL,
             role VARCHAR(10) NOT NULL DEFAULT 'user'
         );
@@ -41,17 +42,17 @@ def init_db():
             close_connection(conn)
 
 # Función para crear un usuario
-def create_user(username, password, role='user') -> Optional[int]:
+def create_user(username, email, password) -> Optional[int]:
     conn = connect_to_database()
     cur = create_cursor(conn)
     if conn is not None and cur is not None:
         hashed_password = get_password_hash(password)
         insert_user_query = sql.SQL('''
-        INSERT INTO users (username, hashed_password, role)
-        VALUES (%s, %s, %s) RETURNING id;
+        INSERT INTO users (username, email, hashed_password, role)
+        VALUES (%s, %s, %s, %s) RETURNING id;
         ''')
         try:
-            cur.execute(insert_user_query, (username, hashed_password, role))
+            cur.execute(insert_user_query, (username, email, hashed_password))
             conn.commit()
             user_id = cur.fetchone()[0]
             return user_id

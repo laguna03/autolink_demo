@@ -11,6 +11,7 @@ from app.models.user_operations import create_user, verify_user
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from fastapi.responses import HTMLResponse
+import logging
 import os
 
 router = APIRouter()
@@ -29,13 +30,18 @@ async def create_access_token(data: dict, expires_delta: timedelta = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-@router.post("/create-account")
-async def create_user_endpoint(user: UserCreate):
-    user_id = create_user(user.username, user.password, user.role)
-    if user_id:
-        return {"username": user.username, "id": user_id, "role": user.role}
-    else:
-        raise HTTPException(status_code=400, detail="Error creating user")
+@router.post("/create_account")
+async def create_user_endpoint(user: UserCreate, session: Session = Depends(SessionLocal)):
+    logging.info(f"Received data: {user}")
+    existing_user = session.query(User).filter_by(email=user.email).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    user_id = create_user(user.username, user.email, user.password)  # Call the create_user function
+    if user_id is None:
+        raise HTTPException(status_code=500, detail="Error creating user")
+
+    return {"message": "user created successfully"}
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -87,8 +93,6 @@ async def get_login():
 async def get_create_account():
     with open(os.path.join(TEMPLATE_DIR, "create_account.html"), "r") as f:
         return HTMLResponse(content=f.read(), status_code=200)
-
-
 
 
 
