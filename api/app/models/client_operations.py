@@ -1,7 +1,8 @@
 from fastapi import HTTPException
 from app.services import postgre_connector
 from .classes.client_class import ClientData, ClientResponse
-
+from typing import List, Dict
+import psycopg2
 
 def create_client(client_data):
     conn = postgre_connector.connect_to_database()
@@ -112,3 +113,27 @@ def delete_client(client_id):
     finally:
         cur.close()
         conn.close()
+
+
+
+
+def get_clients_data() -> List[Dict[str, str]]:
+    conn = postgre_connector.connect_to_database()
+    cur = postgre_connector.create_cursor(conn)
+    data = []
+    if conn is not None and cur is not None:
+        try:
+            query = '''
+            SELECT clients.first_name, vehicles.license_plate, appointments.date
+            FROM clients
+            JOIN vehicles ON clients.id = vehicles.client_id
+            JOIN appointments ON clients.id = appointments.client_id
+            '''
+            cur.execute(query)
+            rows = cur.fetchall()
+            data = [{"first_name": row[0], "license_plate": row[1], "date": row[2]} for row in rows]
+        except (Exception, psycopg2.Error) as error:
+            print("Error al obtener datos:", error)
+        finally:
+            postgre_connector.close_connection(conn)
+    return data

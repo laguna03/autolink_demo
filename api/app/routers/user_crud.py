@@ -1,13 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends, status
-from sqlalchemy.orm import Session
-from app.models.classes.user_class import UserCreate
-from app.services.postgre_connector import SessionLocal, engine
-from app.security.hashing import get_password_hash
-from app.models.classes.user_table import User
 from app.models.classes.user_class import UserCreate, Token, TokenData
-from app.security.token import get_current_user, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.security.token import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from datetime import datetime, timedelta
-from app.models.user_operations import create_user, verify_user
+from app.models.user_operations import create_user, verify_user, create_access_token
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from fastapi.responses import HTMLResponse
@@ -19,44 +14,38 @@ router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-# Función para crear el token de acceso
-async def create_access_token(data: dict, expires_delta: timedelta = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.now() + expires_delta
-    else:
-        expire = datetime.now() + timedelta(minutes=15)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
 @router.post("/create_account")
-async def create_user_endpoint(user: UserCreate, session: Session = Depends(SessionLocal)):
+async def create_user_endpoint(user: UserCreate) -> dict:
     logging.info(f"Received data: {user}")
-    existing_user = session.query(User).filter_by(email=user.email).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
+    try:
+        user_id = create_user(user.username, user.email, user.password)
+        if user_id is None:
+            raise HTTPException(status_code=500, detail="Error creating user")
+        return {"message": "User created successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    user_id = create_user(user.username, user.email, user.password)  # Call the create_user function
-    if user_id is None:
-        raise HTTPException(status_code=500, detail="Error creating user")
-
-    return {"message": "user created successfully"}
 
 @router.post("/token", response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user_info = verify_user(form_data.username, form_data.password)
-    if not user_info:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Username or password is incorrect",
-            headers={"WWW-Authenticate": "Bearer"},
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()) -> dict:
+    try:
+        user_info = verify_user(form_data.username, form_data.password)
+        if not user_info:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Username or password is incorrect",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token(
+            data={"sub": user_info["username"]}, expires_delta=access_token_expires
         )
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": form_data.username}, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
+        return {"access_token": access_token, "token_type": "bearer"}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print("Unexpected error:", e)
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
 @router.get("/users/me/", response_model=TokenData)
 async def read_users_me(token: str = Depends(oauth2_scheme)):
@@ -93,36 +82,3 @@ async def get_login():
 async def get_create_account():
     with open(os.path.join(TEMPLATE_DIR, "create_account.html"), "r") as f:
         return HTMLResponse(content=f.read(), status_code=200)
-
-
-
-
-
-# Dependency
-# async def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
-
-# @router.post("/register/")
-# async def register_user(user: UserCreate, db: Session = Depends(get_db)):
-#     db_user = db.query(User).filter(User.email == user.email).first()
-#     if db_user:
-#         raise HTTPException(status_code=400, detail="Email already registered")
-#     hashed_password = get_password_hash(user.password)
-#     db_user = User(username=user.username, email=user.email, hashed_password=hashed_password)
-#     db.add(db_user)
-#     db.commit()
-#     db.refresh(db_user)
-#     return {"username": db_user.username, "email": db_user.email}
-
-# @router.get("/users/me/")
-# async def read_user_me(current_user: User = Depends(get_current_user)):
-#     return current_user
-
-# @router.get("/dynamic/")
-# async def dynamic_content(current_user: User = Depends(get_current_user)):
-#     # Logic to return dynamic content
-#     return {"message": f"Hello, {current_user.username}! This content is dynamic."}

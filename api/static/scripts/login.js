@@ -1,9 +1,10 @@
 document.getElementById('login-form').addEventListener('submit', function (e) {
     e.preventDefault();
+
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch('http://localhost:8000/token', {
+    fetch("http://localhost:8000/user/token", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -13,19 +14,24 @@ document.getElementById('login-form').addEventListener('submit', function (e) {
             'password': password
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.detail) });
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.access_token) {
-            document.getElementById('message').textContent = 'Login exitoso!';
+            console.log('Login successful, token received:', data.access_token);
+            document.getElementById('message').textContent = 'Login successful!';
             localStorage.setItem('token', data.access_token);
-            // Redirigir al dashboard u otra página
-            window.location.href = '/home';
+            window.location.href = '/home';  // Redirige a la página de inicio
         } else {
-            document.getElementById('message').textContent = 'Nombre de usuario o contraseña incorrectos';
+            document.getElementById('message').textContent = 'Username or password incorrect. Try again.';
         }
     })
     .catch(error => {
-        document.getElementById('message').textContent = 'Error al iniciar sesión.';
+        document.getElementById('message').textContent = `Error: ${error.message}`;
         console.error('Error:', error);
     });
 });

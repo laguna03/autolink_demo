@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-import psycopg2
 from psycopg2 import sql
 from passlib.context import CryptContext
-from typing import Optional
+from typing import Optional, Dict
 from app.services.postgre_connector import connect_to_database, close_connection, create_cursor
-
-# Datos de conexión a la base de datos
+from fastapi import HTTPException
+from datetime import datetime, timedelta
+from jose import jwt
+from app.security.token import SECRET_KEY, ALGORITHM
 
 # Contexto de hash de contraseña
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Función para obtener el hash de una contraseña
-def get_password_hash(password):
+def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
 # Función para verificar una contraseña
@@ -19,67 +20,56 @@ def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
 
-# Función para inicializar la base de datos (crear tabla)
-def init_db():
-    conn = connect_to_database()
-    cur = create_cursor(conn)
-    if conn is not None and cur is not None:
-        create_table_query = '''
-        CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            username VARCHAR(100) UNIQUE NOT NULL,
-            email VARCHAR(100) UNIQUE NOT NULL,
-            hashed_password VARCHAR(255) NOT NULL,
-            role VARCHAR(10) NOT NULL DEFAULT 'user'
-        );
-        '''
-        try:
-            cur.execute(create_table_query)
-            conn.commit()
-        except (Exception, psycopg2.Error) as error:
-            print("Error al crear la tabla:", error)
-        finally:
-            close_connection(conn)
-
 # Función para crear un usuario
-def create_user(username, email, password) -> Optional[int]:
+def create_user(username: str, email: str, password: str) -> Optional[int]:
     conn = connect_to_database()
-    cur = create_cursor(conn)
-    if conn is not None and cur is not None:
+    try:
+        cur = conn.cursor()
         hashed_password = get_password_hash(password)
-        insert_user_query = sql.SQL('''
+        insert_user_query = '''
         INSERT INTO users (username, email, hashed_password, role)
-        VALUES (%s, %s, %s, %s) RETURNING id;
-        ''')
-        try:
-            cur.execute(insert_user_query, (username, email, hashed_password))
-            conn.commit()
-            user_id = cur.fetchone()[0]
-            return user_id
-        except (Exception, psycopg2.Error) as error:
-            print("Error al crear usuario:", error)
-        finally:
+        VALUES (%s, %s, %s, 'user') RETURNING id;
+        '''
+        cur.execute(insert_user_query, (username, email, hashed_password))
+        conn.commit()
+        user_id = cur.fetchone()[0]
+        return user_id
+    except Exception as e:
+        print("Error al crear usuario:", e)
+        raise HTTPException(status_code=400, detail=str(e))
+    finally:
+        if cur:
+            cur.close()
+        if conn:
             close_connection(conn)
 
-# Función para verificar el login de un usuario
-def verify_user(username, password) -> Optional[dict]:
+def verify_user(username: str, password: str) -> Optional[dict]:
     conn = connect_to_database()
-    cur = create_cursor(conn)
-    if conn is not None and cur is not None:
+    try:
+        cur = create_cursor(conn)
         select_user_query = sql.SQL('''
-        SELECT id, hashed_password, role FROM users WHERE username = %s;
+        SELECT id, username, email, hashed_password, role FROM users WHERE username = %s;
         ''')
-        try:
-            cur.execute(select_user_query, (username,))
-            user = cur.fetchone()
-            if user and verify_password(password, user[1]):
-                return {"id": user[0], "role": user[2]}
-            else:
-                return None
-        except (Exception, psycopg2.Error) as error:
-            print("Error al verificar usuario:", error)
-        finally:
+        cur.execute(select_user_query, (username,))
+        user = cur.fetchone()
+        if user and verify_password(password, user[3]):
+            return {"id": user[0], "username": user[1], "email": user[2], "role": user[4]}
+        return None
+    except Exception as e:
+        print("Error verifying user:", e)
+        raise HTTPException(status_code=400, detail=str(e))
+    finally:
+        if cur:
+            cur.close()
+        if conn:
             close_connection(conn)
 
-# Inicializar la base de datos (crear tabla)
-init_db()
+def create_access_token(data: dict, expires_delta: timedelta = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.now() + expires_delta
+    else:
+        expire = datetime.now() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt

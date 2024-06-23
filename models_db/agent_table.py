@@ -1,33 +1,17 @@
 #!/usr/bin/env python3
-""" Create a table in the PostgreSQL database """
+from sqlalchemy import Column, String, Integer, TIMESTAMP, func
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import declarative_base
+import uuid
 
-import psycopg2
+Base = declarative_base()
 
+class Agent(Base):
+    __tablename__ = "agents"
 
-# Establish a connection to the database by creating a connection object
-db_connection = psycopg2.connect(
-    dbname="autolinkdb",
-    user="pedrolaguna",
-    password="autolink2024",
-    host="localhost",
-    port="5432"
-)
-
-# Create a cursor object using the cursor() method
-cur = db_connection.cursor()
-
-cur.execute("""
-CREATE TABLE agent (
-    agent_ID UUID PRIMARY KEY,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    first_name VARCHAR NOT NULL,
-    last_name VARCHAR NOT NULL,
-    email VARCHAR,
-    emp_number VARCHAR NOT NULL
-);
-""")
-
-db_connection.commit()
-
-cur.close()
-db_connection.close()
+    agent_ID = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    updated_at = Column(TIMESTAMP, server_default=func.now())
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    email = Column(String, nullable=True)
+    emp_number = Column(String, nullable=False)
