@@ -7,14 +7,20 @@
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
+    <div class="sidebar-button-container">
+        <button class="minimize-button">
+            <img src="../images/min-button.png" class="minimize-button-img">
+            <img src="../images/max-button.png" class="maximize-button-img" style="display: none;">
+        </button>
+    </div>
+
     <div class="sidebar">
-        <button class="minimize-button"><img src="../images/sidebar-collapse.png" class="minimize-button-img"></button>
         <a href="#" class="active">Dashboard</a>
         <a href="#"class="sales-report-button">Sales Report</a>
         <a href="#" class="appointments-button">Appointments</a>
         <a href="#" class="units-button">Units</a>
         <a href="#" class="clients-button">Clients</a>
-        <a href="login.html" class="logout"><button class="logout-button"><img src="../images/logout-icon.png" class="logout-button-img"></button></a>
+        <a href="login.html" class="logout"><button class="logout-button"><img src="../images/logout-button.png" class="logout-button-img"></button></a>
     </div>
 
     <div class="content">
@@ -148,8 +154,23 @@
         </div>
     </div>
     <script>
-        document.querySelector('.minimize-button').addEventListener('click', function() {
-            document.querySelector('.sidebar').classList.toggle('minimized');
+        document.addEventListener('DOMContentLoaded', function() {
+            var sidebar = document.querySelector('.sidebar');
+            var button = document.querySelector('.minimize-button');
+            var minImg = document.querySelector('.minimize-button-img');
+            var maxImg = document.querySelector('.maximize-button-img');
+
+            button.addEventListener('click', function() {
+                sidebar.classList.toggle('minimized');
+
+                if (sidebar.classList.contains('minimized')) {
+                    minImg.style.display = 'none';
+                    maxImg.style.display = 'block';
+                } else {
+                    minImg.style.display = 'block';
+                    maxImg.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>

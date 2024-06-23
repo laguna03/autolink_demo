@@ -5,9 +5,9 @@ import psycopg2
 
 # Establish a connection to the database by creating a connection object
 db_connection = psycopg2.connect(
-    dbname="autolinkdb",
-    user="pedrolaguna",
-    password="autolink2024",
+    dbname="",
+    user="",
+    password="",
     host="localhost",
     port="5432"
 )
