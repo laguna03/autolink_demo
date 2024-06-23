@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 clientsTable.appendChild(row);
             });
         })
-        .catch(error => console.error('Error al obtener datos:', error));
+        .catch(error => console.error('Error retrieving data:', error));
 });
 
 var button = document.getElementById('toggle-sidebar');
