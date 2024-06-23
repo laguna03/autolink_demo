@@ -124,7 +124,7 @@ def get_clients_data() -> List[Dict[str, str]]:
     if conn is not None and cur is not None:
         try:
             query = '''
-            SELECT clients.first_name, vehicles.license_plate, appointments.date
+            SELECT clients.first_name, vehicles.license_plate, appointments.appt_time
             FROM clients
             JOIN vehicles ON clients.id = vehicles.client_id
             JOIN appointments ON clients.id = appointments.client_id
