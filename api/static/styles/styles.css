@@ -1,0 +1,189 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #eaeaf9;
+    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: #d2d2de;
+    padding-top: 20px;
+    position: fixed;
+    left: -250px;
+    animation: slideIn 0.8s forwards;
+    display: none;
+    transition: left 0.8s ease;
+}
+
+.sidebar a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards 0.5s;
+}
+
+.sidebar a:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .active {
+    font-weight: bold;
+    display: block;
+}
+
+.sidebar.open {
+    display: block;
+    transform: translateX(0);
+}
+
+.sidebar.open ~ .content {
+    transform: translateX(250px);
+}
+
+.sidebar .logout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #0000ff;
+}
+
+.toggle-button {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.button-image {
+    width: 50px;
+    height: auto;
+}
+
+.button-image-clicked {
+    width:50px;
+    height: auto;
+    display: none;
+}
+
+.content::-webkit-scrollbar {
+    display: none;
+}
+
+.content {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    padding: 20px;
+    height: 100vh;
+    width: 100%;
+    transition: transform 0.5s ease;
+}
+
+.header {
+    width: 100%;
+    top: 0;
+    left:0;
+    background-color: #0000ff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards 1s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    border-radius: 0 0 10px 10px;
+}
+
+.logo {
+    right: -35px;
+    width: 300px; /* Adjust this value to the size you want */
+    height: auto;
+    animation: rotateIn 1s forwards;
+    position: absolute;
+}
+
+.stats {
+    align-items: center;
+    height: 30%;
+    margin: 20x 0;
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards 1.5s;
+}
+
+.stat-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100px; /* Decrease this value to make the boxes smaller */
+    transition: transform 0.3s;
+}
+
+.stat-box:hover {
+    transform: scale(1.1);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #0000ff;
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+select {
+    width: 100%;
+    padding: 5px;
+}
+
+@keyframes slideIn {
+    to {
+        left: 0;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes rotateIn {
+    from {
+        transform: rotate(-360deg);
+    }
+    to {
+        transform: rotate(0);
+    }
+}
