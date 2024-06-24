@@ -8,7 +8,7 @@ def create_vehicle(vehicle_data):
     try:
         cur = conn.cursor()
         query = """
-            INSERT INTO vehicles (vehicle_id, client_id, license_plate, vin_number, make, mileage, model, year)
+            INSERT INTO autolink.vehicles (vehicle_id, client_id, license_plate, vin_number, make, mileage, model, year)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
         cur.execute(query, (

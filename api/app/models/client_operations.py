@@ -8,7 +8,7 @@ def create_client(client_data):
     conn = postgre_connector.connect_to_database()
     try:
         cur = conn.cursor()
-        query = "INSERT INTO clients (client_id, updated_at, first_name, last_name, email, phone, date_of_birth) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO autolink.clients (client_id, updated_at, first_name, last_name, email, phone, date_of_birth) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cur.execute(query, (
             str(client_data.client_id),
             client_data.updated_at,

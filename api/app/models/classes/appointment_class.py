@@ -4,7 +4,7 @@ from uuid import UUID
 
 
 class AppointmentData(BaseModel):
-    id: int
+    appt_id: int
     agent_id: UUID
     sale_id: int
     client_id: UUID

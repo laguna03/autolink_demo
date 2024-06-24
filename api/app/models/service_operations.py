@@ -7,9 +7,9 @@ def create_service(service_data):
     conn = postgre_connector.connect_to_database()
     try:
         cur = conn.cursor()
-        query = "INSERT INTO services (id, service_name, service_description, service_duration, service_price) VALUES (%s, %s, %s, %s, %s)"
+        query = "INSERT INTO autolink.services (service_id, service_name, service_description, service_duration, service_price) VALUES (%s, %s, %s, %s, %s)"
         cur.execute(query, (
-            service_data.id,
+            service_data.service_id,
             service_data.service_name,
             service_data.service_description,
             service_data.service_duration,
