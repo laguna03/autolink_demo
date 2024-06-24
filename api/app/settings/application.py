@@ -2,7 +2,6 @@ from typing import Union
 from functools import lru_cache
 from pydantic_settings import BaseSettings
 
-
 class ApplicationSettings(BaseSettings):
     environment_name: str  # dev, stage, prod
     log_level: str  # DEBUG, INFO, WARNING, ERROR, CRITICAL

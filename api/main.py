@@ -11,9 +11,11 @@ from app.routers import add_routers
 from app.settings.application import get_settings
 from app.settings.logger import init_logger
 
-init_logger()
 
 settings = get_settings()
+
+init_logger(settings.log_level)
+
 
 app = FastAPI(
     title="AutoLink",
