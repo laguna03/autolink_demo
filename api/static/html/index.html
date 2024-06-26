@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <script defer src="../static/scripts/dashboard.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -13,13 +14,13 @@
         <a href="#">Appointments</a>
         <a href="#">Units</a>
         <a href="#">Clients</a>
-        <a href="login.html" class="logout">Log out</a>
+        <a href="/login" class="logout">Log out</a>
     </div>
 
     <div class="content">
         <div class="header">
-            <h1><button id="toggle-sidebar" class="toggle-button"><img src="../images/dashboard_button.png" alt="dashboard_button" class="button-image"><img src="../images/dashboard_button_clicked.png" alt="dashboard_button_clicked" class="button-image-clicked"></button></h1>
-            <img src="../images/logo_white_al.png" alt="AutoLink Logo" class="logo">
+            <h1><button id="toggle-sidebar" class="toggle-button"><img src="../static/images/dashboard_button.png" alt="dashboard_button" class="button-image"><img src="../static/images/dashboard_button_clicked.png" alt="dashboard_button_clicked" class="button-image-clicked"></button></h1>
+            <img src="../static/images/logo_white_al.png" alt="AutoLink Logo" class="logo">
         </div>
 
         <div class="stats">
@@ -45,8 +46,8 @@
             </div>
         </div>
 
-        <div class="table-container">
-            <table>
+        <div>
+            <table class="table-container table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Queue</th>
@@ -55,42 +56,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for clients in clients %}
-                    <tr>
-                        <td><select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:09:54</td>
-                        <td>FRONT TRAIN</td>
-                    </tr>
-                    <tr>
-                        <td>Angel Gonzalez <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:16:32</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Carlos Ortiz <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:29:10</td>
-                        <td>ABS</td>
-                    </tr>
-                    <tr>
-                        <td>Esteban Garcia <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:25:00</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Carmen Jimenez <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:30:00</td>
-                        <td>CHECK ENGINE</td>
-                    </tr>
-                    <tr>
-                        <td>Gabriel Colon <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:25:00</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Manuel Matos <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>01:30:00</td>
-                        <td>FRONT TRAIN</td>
-                    </tr>
+                        <!-- Data rows will be inserted here by JavaScript -->
                 </tbody>
             </table>
 
@@ -147,7 +113,7 @@
             </table>
         </div>
     </div>
-    <script>
+    <!-- <script>
         var button = document.getElementById('toggle-sidebar');
         var buttonImage = button.querySelector('.button-image');
         var buttonImageClicked = button.querySelector('.button-image-clicked');
@@ -164,6 +130,6 @@
                 buttonImageClicked.style.display = 'none';
             }
         });
-    </script>
+    </script> -->
 </body>
 </html>

@@ -137,3 +137,26 @@ def get_clients_data() -> List[Dict[str, str]]:
         finally:
             postgre_connector.close_connection(conn)
     return data
+
+# def get_clients_data(page: int = 1, page_size: int = 10) -> List[Dict[str, str]]:
+#     conn = postgre_connector.connect_to_database()
+#     cur = postgre_connector.create_cursor(conn)
+#     data = []
+#     if conn is not None and cur is not None:
+#         try:
+#             offset = (page - 1) * page_size
+#             query = '''
+#             SELECT clients.first_name, vehicles.license_plate, appointments.appt_time
+#             FROM clients
+#             JOIN vehicles ON clients.id = vehicles.client_id
+#             JOIN appointments ON clients.id = appointments.client_id
+#             LIMIT %s OFFSET %s
+#             '''
+#             cur.execute(query, (page_size, offset))
+#             rows = cur.fetchall()
+#             data = [{"first_name": row[0], "license_plate": row[1], "date": row[2]} for row in rows]
+#         except (Exception, psycopg2.Error) as error:
+#             print("Error retrieving data :", error)
+#         finally:
+#             postgre_connector.close_connection(conn)
+#     return data
