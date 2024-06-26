@@ -27,8 +27,8 @@ def create_user(username: str, email: str, password: str) -> Optional[int]:
         cur = conn.cursor()
         hashed_password = get_password_hash(password)
         insert_user_query = '''
-        INSERT INTO users (username, email, hashed_password, role)
-        VALUES (%s, %s, %s, 'user') RETURNING id;
+        INSERT INTO users (username, email, hashed_password)
+        VALUES (%s, %s, %s) RETURNING id;
         '''
         cur.execute(insert_user_query, (username, email, hashed_password))
         conn.commit()

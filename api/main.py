@@ -10,6 +10,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import add_routers
 from app.settings.application import get_settings
 from app.settings.logger import init_logger
+from fastapi.staticfiles import StaticFiles
+from fastapi.security import OAuth2PasswordBearer
+from fastapi.responses import HTMLResponse
 
 
 settings = get_settings()
@@ -35,8 +38,30 @@ if settings.environment_name == "local":
         allow_headers=["*"],
     )
 
+# Montar el directorio estático para servir archivos CSS, JS y de imagen
+app.mount("/static", StaticFiles(directory="static"), name="static")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.join(BASE_DIR, "static")
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    with open(os.path.join(TEMPLATE_DIR, "html/create_agent.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
+@app.get("/login", response_class=HTMLResponse)
+async def get_login():
+    with open(os.path.join(TEMPLATE_DIR, "html/login.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
+@app.get("/home", response_class=HTMLResponse)
+async def get_index():
+    with open(os.path.join(TEMPLATE_DIR, "html/index.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 add_routers(app)
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("API_PORT", "8083")))
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("API_PORT", "8000")))
