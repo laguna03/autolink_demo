@@ -45,7 +45,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "static")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    with open(os.path.join(TEMPLATE_DIR, "html/create_agent.html"), "r") as f:
+    with open(os.path.join(TEMPLATE_DIR, "html/landing.html"), "r") as f:
         return HTMLResponse(content=f.read(), status_code=200)
 
 @app.get("/login", response_class=HTMLResponse)
@@ -56,6 +56,11 @@ async def get_login():
 @app.get("/home", response_class=HTMLResponse)
 async def get_index():
     with open(os.path.join(TEMPLATE_DIR, "html/index.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
+@app.get("/create_agent", response_class=HTMLResponse)
+async def read_root():
+    with open(os.path.join(TEMPLATE_DIR, "html/create_agent.html"), "r") as f:
         return HTMLResponse(content=f.read(), status_code=200)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
