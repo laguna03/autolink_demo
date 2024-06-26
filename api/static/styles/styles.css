@@ -1,14 +1,28 @@
+<<<<<<< HEAD
 body {
+=======
+
+
+body {
+    background-image: url('../images/autolink-lobby-img.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+>>>>>>> main
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #eaeaf9;
+<<<<<<< HEAD
     overflow-x: hidden;
     height: 100vh;
+=======
+    overflow-x: auto;
+>>>>>>> main
     display: flex;
 }
 
 .sidebar {
+<<<<<<< HEAD
     width: 250px;
     height: 100%;
     background-color: #d2d2de;
@@ -18,12 +32,30 @@ body {
     animation: slideIn 0.8s forwards;
     display: none;
     transition: left 0.8s ease;
+=======
+    top: 50px;
+    width: 250px;
+    height: 100vh;
+    background-color: hwb(240 2% 28%);
+    padding-top: 20px;
+    position: relative;
+    animation: slideIn 0.8s forwards;
+    transition: width 0.8s ease;
+    z-index: 0;
+    overflow-y: auto;
+}
+
+.sidebar.minimized {
+    width: 50px;
+    transition: width 0.8s ease;
+>>>>>>> main
 }
 
 .sidebar a {
     display: block;
     padding: 15px;
     text-decoration: none;
+<<<<<<< HEAD
     color: black;
     font-size: 18px;
     opacity: 0;
@@ -31,6 +63,94 @@ body {
 }
 
 .sidebar a:hover {
+=======
+    color: rgb(249, 254, 255);
+    font-size: 18px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards 0.5s;
+    margin-top: 20px;
+}
+
+.sidebar-button {
+    margin-bottom: 20px;
+    position: relative;
+    top: 5px;
+    height: 50px;
+    padding: 0;
+    border: none;
+    background: none;
+    width: 100%;
+}
+
+.minimize-button {
+    position: absolute;
+    width: 53px;
+    height: 40px;
+    top: 50px;
+    left: -5px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.minimize-button-img {
+    width: 60px;
+    height: 35px;
+    display: block;
+}
+
+.maximize-button-img {
+    width: 75px;
+    height: 40px;
+    top: 1px;
+    left: -7px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1;
+    position: absolute;
+}
+
+.sidebar.minimized .minimize-button-img {
+    display: none;
+}
+
+.sidebar.minimized .maximized-button-img {
+    left: -10px;
+    display: block;
+}
+
+
+
+.sidebar.minimized {
+    width: 50px;
+}
+
+.sidebar.minimized a {
+    display: none;
+}
+
+.sidebar .active:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .sales-report-button:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .appointments-button:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .units-button:hover {
+    background-color: #93aef9;
+}
+
+.sidebar .clients-button:hover {
+>>>>>>> main
     background-color: #93aef9;
 }
 
@@ -39,6 +159,7 @@ body {
     display: block;
 }
 
+<<<<<<< HEAD
 .sidebar.open {
     display: block;
     transform: translateX(0);
@@ -53,6 +174,32 @@ body {
     bottom: 20px;
     left: 20px;
     color: #0000ff;
+=======
+
+
+.sidebar .logout {
+    position: absolute;
+    bottom: 100px;
+    left: -20px;
+}
+
+.logout-button {
+    width: 10px;
+    height: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.logout-button-img {
+    width: 100px;
+    height: 60px;
+}
+
+.sidebar .logout-button-img:hover {
+    color: transparent;
+>>>>>>> main
 }
 
 .toggle-button {
@@ -81,19 +228,33 @@ body {
 }
 
 .content {
+<<<<<<< HEAD
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+=======
+    margin-left: 20px;
+    overflow: auto;
+    scrollbar-width: none;
+>>>>>>> main
     padding: 20px;
     height: 100vh;
     width: 100%;
     transition: transform 0.5s ease;
+<<<<<<< HEAD
+=======
+    flex-grow: 1;
+>>>>>>> main
 }
 
 .header {
     width: 100%;
     top: 0;
     left:0;
+<<<<<<< HEAD
     background-color: #0000ff;
+=======
+    background-color: hwb(240 2% 28%);
+>>>>>>> main
     color: white;
     padding: 10px;
     text-align: center;
@@ -130,9 +291,27 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+<<<<<<< HEAD
     text-align: center;
     width: 100px; /* Decrease this value to make the boxes smaller */
     transition: transform 0.3s;
+=======
+    width: 150px; /* Decrease this value to make the boxes smaller */
+    height: 120px; /* Decrease this value to make the boxes smaller */
+    transition: transform 0.3s;
+    border: 5px solid hwb(240 2% 28%);
+}
+.stat-box h2{
+    color: rgb(27, 193, 33);
+    text-align: center;
+    font-size: 30px;
+}
+
+.stat-box p{
+    text-align: center;
+    color: rgb(41, 35, 39);
+    font-size: 20px;
+>>>>>>> main
 }
 
 .stat-box:hover {
@@ -151,17 +330,31 @@ table {
 }
 
 th, td {
+<<<<<<< HEAD
     border: 1px solid #ddd;
+=======
+    border: 1px solid hwb(240 2% 28%);
+>>>>>>> main
     padding: 10px;
     text-align: left;
 }
 
+<<<<<<< HEAD
 th {
     background-color: #0000ff;
     color: white;
     border-radius: 10px 10px 0 0;
 }
 
+=======
+
+th {
+    background-color: hwb(240 2% 28%);
+    color: white;
+}
+
+
+>>>>>>> main
 select {
     width: 100%;
     padding: 5px;

@@ -7,11 +7,10 @@ def create_appointment(appointment_data: AppointmentData):
     conn = postgre_connector.connect_to_database()
     try:
         cur = conn.cursor()
-        query = "INSERT INTO appointment (id, agent_id, sale_id, client_id, service_id, vehicle_id, created_at, status, appt_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO autolink.appointments (appt_id, agent_id, client_id, service_id, vehicle_id, created_at, status, appt_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         cur.execute(query, (
-            appointment_data.id,
+            appointment_data.appt_id,
             str(appointment_data.agent_id),
-            appointment_data.sale_id,
             str(appointment_data.client_id),
             appointment_data.service_id,
             appointment_data.vehicle_id,

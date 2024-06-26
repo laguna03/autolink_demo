@@ -14,9 +14,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import HTMLResponse
 
-init_logger()
 
 settings = get_settings()
+
+init_logger(settings.log_level)
+
 
 app = FastAPI(
     title="AutoLink",

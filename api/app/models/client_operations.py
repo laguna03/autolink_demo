@@ -8,9 +8,9 @@ def create_client(client_data):
     conn = postgre_connector.connect_to_database()
     try:
         cur = conn.cursor()
-        query = "INSERT INTO clients (id, updated_at, first_name, last_name, email, phone, date_of_birth) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO autolink.clients (client_id, updated_at, first_name, last_name, email, phone, date_of_birth) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cur.execute(query, (
-            str(client_data.id),
+            str(client_data.client_id),
             client_data.updated_at,
             client_data.first_name,
             client_data.last_name,
@@ -124,7 +124,11 @@ def get_clients_data() -> List[Dict[str, str]]:
     if conn is not None and cur is not None:
         try:
             query = '''
+<<<<<<< HEAD
             SELECT clients.first_name, vehicles.license_plate, appointments.date
+=======
+            SELECT clients.first_name, vehicles.license_plate, appointments.appt_time
+>>>>>>> main
             FROM clients
             JOIN vehicles ON clients.id = vehicles.client_id
             JOIN appointments ON clients.id = appointments.client_id
@@ -133,7 +137,14 @@ def get_clients_data() -> List[Dict[str, str]]:
             rows = cur.fetchall()
             data = [{"first_name": row[0], "license_plate": row[1], "date": row[2]} for row in rows]
         except (Exception, psycopg2.Error) as error:
+<<<<<<< HEAD
             print("Error al obtener datos:", error)
         finally:
             postgre_connector.close_connection(conn)
     return data
+=======
+            print("Error retrieving data :", error)
+        finally:
+            postgre_connector.close_connection(conn)
+    return data
+>>>>>>> main

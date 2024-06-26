@@ -4,7 +4,11 @@ from app.security.token import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTE
 from datetime import datetime, timedelta
 from app.models.user_operations import create_user, verify_user, create_access_token
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+<<<<<<< HEAD
 from jose import JWTError, jwt
+=======
+from jose import JWTError,jwt
+>>>>>>> main
 from fastapi.responses import HTMLResponse
 import logging
 import os
