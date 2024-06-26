@@ -7,18 +7,24 @@
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
+    <div class="sidebar-button-container">
+        <button class="minimize-button">
+            <img src="../images/min-button.png" class="minimize-button-img">
+            <img src="../images/max-button.png" class="maximize-button-img" style="display: none;">
+        </button>
+    </div>
+
     <div class="sidebar">
         <a href="#" class="active">Dashboard</a>
-        <a href="#">Sales Report</a>
-        <a href="#">Appointments</a>
-        <a href="#">Units</a>
-        <a href="#">Clients</a>
-        <a href="login.html" class="logout">Log out</a>
+        <a href="#" class="appointments-button">Appointments</a>
+        <a href="#" class="units-button">Units</a>
+        <a href="#" class="clients-button">Clients</a>
+        <a href="login.html" class="logout"><button class="logout-button"><img src="../images/logout-button.png" class="logout-button-img"></button></a>
     </div>
 
     <div class="content">
         <div class="header">
-            <h1><button id="toggle-sidebar" class="toggle-button"><img src="../images/dashboard_button.png" alt="dashboard_button" class="button-image"><img src="../images/dashboard_button_clicked.png" alt="dashboard_button_clicked" class="button-image-clicked"></button></h1>
+            <h1></h1>
             <img src="../images/logo_white_al.png" alt="AutoLink Logo" class="logo">
         </div>
 
@@ -34,10 +40,6 @@
             <div class="stat-box">
                 <h2>3</h2>
                 <p>No Show</p>
-            </div>
-            <div class="stat-box">
-                <h2>3,672</h2>
-                <p>Sales</p>
             </div>
             <div class="stat-box">
                 <h2>7</h2>
@@ -56,37 +58,37 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td> Luis Perez <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
+                        <td> Luis Perez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
                         <td>00:09:54</td>
                         <td>FRONT TRAIN</td>
                     </tr>
                     <tr>
-                        <td>Angel Gonzalez <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
+                        <td>Angel Gonzalez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
                         <td>00:16:32</td>
                         <td>OIL CHANGE</td>
                     </tr>
                     <tr>
-                        <td>Carlos Ortiz <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
+                        <td>Carlos Ortiz <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
                         <td>00:29:10</td>
                         <td>ABS</td>
                     </tr>
                     <tr>
-                        <td>Esteban Garcia <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
+                        <td>Esteban Garcia <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
                         <td>00:25:00</td>
                         <td>OIL CHANGE</td>
                     </tr>
                     <tr>
-                        <td>Carmen Jimenez <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
+                        <td>Carmen Jimenez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
                         <td>00:30:00</td>
                         <td>CHECK ENGINE</td>
                     </tr>
                     <tr>
-                        <td>Gabriel Colon <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
+                        <td>Gabriel Colon <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
                         <td>00:25:00</td>
                         <td>OIL CHANGE</td>
                     </tr>
                     <tr>
-                        <td>Manuel Matos <select><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
+                        <td>Manuel Matos <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
                         <td>01:30:00</td>
                         <td>FRONT TRAIN</td>
                     </tr>
@@ -96,7 +98,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Clients</th>
+                        <th>Appointments</th>
                         <th>License Plate</th>
                         <th>Date</th>
                     </tr>
@@ -147,21 +149,23 @@
         </div>
     </div>
     <script>
-        var button = document.getElementById('toggle-sidebar');
-        var buttonImage = button.querySelector('.button-image');
-        var buttonImageClicked = button.querySelector('.button-image-clicked');
-
-        button.addEventListener('click', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             var sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('open');
+            var button = document.querySelector('.minimize-button');
+            var minImg = document.querySelector('.minimize-button-img');
+            var maxImg = document.querySelector('.maximize-button-img');
 
-            if (sidebar.classList.contains('open')) {
-                buttonImage.style.display = 'none';
-                buttonImageClicked.style.display = 'block';
-            } else {
-                buttonImage.style.display = 'block';
-                buttonImageClicked.style.display = 'none';
-            }
+            button.addEventListener('click', function() {
+                sidebar.classList.toggle('minimized');
+
+                if (sidebar.classList.contains('minimized')) {
+                    minImg.style.display = 'none';
+                    maxImg.style.display = 'block';
+                } else {
+                    minImg.style.display = 'block';
+                    maxImg.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
