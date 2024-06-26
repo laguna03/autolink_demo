@@ -4,7 +4,7 @@ from uuid import UUID
 
 
 class ClientData(BaseModel):
-    id: UUID
+    client_id: UUID
     updated_at: datetime
     first_name: str
     last_name: str

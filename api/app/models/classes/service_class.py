@@ -1,9 +1,10 @@
 from pydantic import BaseModel
+from datetime import timedelta
 
 
 class ServiceData(BaseModel):
-    id: int
+    service_id: int
     service_name: str
     service_description: str
-    service_duration: int
+    service_duration: timedelta
     service_price: float

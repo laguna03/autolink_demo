@@ -1,15 +1,13 @@
 import logging
 import logging.config
-from app.settings.application import ApplicationSettings
 
 
-def init_logger():
-    settings = ApplicationSettings()
+def init_logger(log_level: str):
     log_config = {
         "version": 1,
         "loggers": {
             "uvicorn": {
-                "level": settings.log_level,
+                "level": log_level,
                 "propagate": False,
                 "handlers": ["uvicorn_handler"],
             }
@@ -18,7 +16,7 @@ def init_logger():
             "uvicorn_handler": {
                 "class": "logging.StreamHandler",
                 "formatter": "uvicorn_formatter",
-                "level": settings.log_level,
+                "level": log_level,
             }
         },
         "formatters": {

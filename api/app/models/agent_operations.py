@@ -9,14 +9,15 @@ def create_agent(agent_data: AgentData):
     conn = postgre_connector.connect_to_database()
     try:
         cur = conn.cursor()
-        query = "INSERT INTO agents (id, updated_at, first_name, last_name, email, employee_num) VALUES (%s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO autolink.agents (agent_id, updated_at, first_name, last_name, username, hashed_password, email) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cur.execute(query, (
-            str(agent_data.id),
+            str(agent_data.agent_id),
             agent_data.updated_at,
             agent_data.first_name,
             agent_data.last_name,
+            agent_data.username,
+            agent_data.hashed_password,
             agent_data.email,
-            agent_data.employee_num
         ))
         conn.commit()
     except Exception as e:
