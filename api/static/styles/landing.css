@@ -3,40 +3,17 @@ body {
     margin: 0;
     padding: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/static/landing_page/autolink-lobby-img.png') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/autolink-lobby-img.png') no-repeat center center;
     color: white;
+    background-size: cover;
 }
 
-nav {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 20px;
+.logo{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    justify-content: center;
+    margin-top: -100px;
+    margin-left: -100px;
 
-nav .logo {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: black;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #333;
 }
 
 .container {
@@ -79,6 +56,8 @@ nav ul li a {
 
 .phone-image img {
     max-width: 300px;
+    margin-left: 20px;
+    margin-top: -200px;
 }
 
 footer {
