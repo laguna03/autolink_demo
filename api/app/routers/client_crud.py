@@ -36,8 +36,4 @@ async def get_dashboard_data_endpoint() -> List[Dict[str, str]]:
     if data:
         return data
     else:
-<<<<<<< HEAD
-        raise HTTPException(status_code=500, detail="Error al obtener datos")
-=======
         raise HTTPException(status_code=500, detail="Error retrieving data")
->>>>>>> main
