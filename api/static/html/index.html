@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <script defer src="../static/scripts/dashboard.js"></script>
 </head>
 <body>
     <div class="sidebar-button-container">
         <button class="minimize-button">
-            <img src="../images/min-button.png" class="minimize-button-img">
-            <img src="../images/max-button.png" class="maximize-button-img" style="display: none;">
+            <img src="../static/images/min-button.png" class="minimize-button-img">
+            <img src="../static/images/max-button.png" class="maximize-button-img" style="display: none;">
         </button>
     </div>
 
@@ -19,13 +20,13 @@
         <a href="#" class="appointments-button">Appointments</a>
         <a href="#" class="units-button">Units</a>
         <a href="#" class="clients-button">Clients</a>
-        <a href="login.html" class="logout"><button class="logout-button"><img src="../images/logout-button.png" class="logout-button-img"></button></a>
+        <a href="/login" class="logout"><button class="logout-button"><img src="../static/images/logout-button.png" class="logout-button-img"></button></a>
     </div>
 
     <div class="content">
         <div class="header">
             <h1></h1>
-            <img src="../images/logo_white_al.png" alt="AutoLink Logo" class="logo">
+            <img src="../static/images/logo_white_al.png" alt="AutoLink Logo" class="logo">
         </div>
 
         <div class="stats">
@@ -47,51 +48,17 @@
             </div>
         </div>
 
-        <div class="table-container">
-            <table>
+        <div class="table">
+            <table class="table-container table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Queue</th>
-                        <th>ET</th>
-                        <th>Service Code</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td> Luis Perez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:09:54</td>
-                        <td>FRONT TRAIN</td>
-                    </tr>
-                    <tr>
-                        <td>Angel Gonzalez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:16:32</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Carlos Ortiz <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:29:10</td>
-                        <td>ABS</td>
-                    </tr>
-                    <tr>
-                        <td>Esteban Garcia <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:25:00</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Carmen Jimenez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:30:00</td>
-                        <td>CHECK ENGINE</td>
-                    </tr>
-                    <tr>
-                        <td>Gabriel Colon <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:25:00</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Manuel Matos <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>01:30:00</td>
-                        <td>FRONT TRAIN</td>
-                    </tr>
+                <tbody id="queue-table-body">
+                    <!-- Aquí se llenarán los datos -->
                 </tbody>
             </table>
 

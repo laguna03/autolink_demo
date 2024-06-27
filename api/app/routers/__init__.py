@@ -6,6 +6,7 @@ from app.routers.service_crud import router as service_router
 from app.routers.vehicle_crud import router as vehicle_router
 from app.routers.user_crud import router as user_router
 from app.routers.health import router as health_router
+from app.routers.queue import router as queue_router
 
 
 def add_routers(app):
@@ -16,3 +17,4 @@ def add_routers(app):
     app.include_router(service_router, prefix="/service", tags=["Services"])
     app.include_router(vehicle_router, prefix="/vehicle", tags=["Vehicles"])
     app.include_router(user_router, prefix="/user", tags=["Users"])
+    app.include_router(queue_router, prefix="/queue", tags=["Queue"])

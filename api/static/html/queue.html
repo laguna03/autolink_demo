@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Client</title>
+    <link rel="stylesheet" href="../styles/client_styles.css">
+</head>
+<body>
+    <header>
+        <img src="../images/logo_icon_al.png" alt="AutoLink Logo" class="logo">
+    </header>
+
+    <div class="container">
+        <form id="clientForm">
+            <h1>CREATE CLIENT</h1>
+            <div class="form-section">
+                <div class="form-group">
+                    <h2>Client</h2>
+                    <input type="text" placeholder="First Name" id="firstName" required>
+                    <input type="text" placeholder="Last Name" id="lastName" required>
+                    <input type="email" placeholder="Email" id="email" required>
+                    <input type="text" placeholder="Phone Number" id="phoneNumber" required>
+                </div>
+                <div class="form-group">
+                    <h2>Vehicle</h2>
+                    <input type="text" placeholder="License Plate" id="licensePlate" required>
+                    <input type="text" placeholder="VIN Number" id="vinNumber" required>
+                    <input type="text" placeholder="Make" id="make" required>
+                    <input type="text" placeholder="Mileage" id="mileage" required>
+                    <input type="text" placeholder="Model" id="model" required>
+                    <input type="text" placeholder="Year" id="year" required>
+                </div>
+            </div>
+            <button type="submit">CREATE</button>
+        </form>
+    </div>
+
+    <script src="../static/scripts/queue.js"></script>
+</body>
+</html>
