@@ -54,6 +54,9 @@
                     <tr>
                         <th>Queue</th>
                         <th>Status</th>
+                        <th>Service</th>
+                        <th>Timer</th>
+                        <th>Update</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -61,6 +64,13 @@
                     <!-- Aquí se llenarán los datos -->
                 </tbody>
             </table>
+        </div>
+        <div class="add-client-container">
+            <h2>Add Existing Client to Queue</h2>
+            <form id="add-client-form">
+                <input type="text" id="client-name" placeholder="Client Name" required>
+                <button type="submit">Add to Queue</button>
+            </form>
         </div>
     </div>
     <!-- <script>
