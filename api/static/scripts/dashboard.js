@@ -34,8 +34,9 @@ function fetchQueueData() {
 									<td>${item.name}</td>
 									<td>
 											<select class="status-dropdown">
-													<option value="Pending">Pending</option>
+													<option value="...">...</option>
 													<option value="In Process">In Process</option>
+													<option value="Pending">Pending</option>
 													<option value="Completed">Completed</option>
 											</select>
 									</td>
@@ -56,6 +57,17 @@ function fetchQueueData() {
 									</td>
 							`;
 							tableBody.appendChild(row);
+					});
+
+					document.querySelectorAll('.service-dropdown').forEach((dropdown, index) => {
+							dropdown.addEventListener('change', () => {
+									const selectedOption = dropdown.options[dropdown.selectedIndex];
+									const time = selectedOption.getAttribute('data-time');
+									const timerCell = tableBody.rows[index].querySelector('.timer-cell');
+									if (time) {
+											timerCell.innerText = `00:${time}`;
+									}
+							});
 					});
 
 					document.querySelectorAll('.update-button').forEach((button, index) => {
@@ -132,42 +144,3 @@ function startTimer(cell, minutes) {
 			}
 	}, 1000);
 }
-
-
-document.addEventListener('DOMContentLoaded', function() {
-	var sidebar = document.querySelector('.sidebar');
-	var button = document.querySelector('.minimize-button');
-	var minImg = document.querySelector('.minimize-button-img');
-	var maxImg = document.querySelector('.maximize-button-img');
-
-	button.addEventListener('click', function() {
-			sidebar.classList.toggle('minimized');
-
-			if (sidebar.classList.contains('minimized')) {
-					minImg.style.display = 'none';
-					maxImg.style.display = 'block';
-			} else {
-					minImg.style.display = 'block';
-					maxImg.style.display = 'none';
-			}
-	});
-
-	document.getElementById('add-client-button').addEventListener('click', function() {
-			const clientName = document.getElementById('client-name').value;
-			if (clientName) {
-					fetch(`http://localhost:8000/queue/add`, {
-							method: 'POST',
-							headers: {
-									'Content-Type': 'application/json'
-							},
-							body: JSON.stringify({ name: clientName })
-					})
-					.then(response => response.json())
-					.then(data => {
-							console.log(data.message);
-							fetchQueueData();
-					})
-					.catch(error => console.error('Error adding client to queue:', error));
-			}
-	});
-});
