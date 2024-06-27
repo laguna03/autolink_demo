@@ -22,36 +22,63 @@ header {
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 450px;
+    width: 1000px; /* Increased the width */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 450px;
 }
-.container h1 {
+
+form {
+    width: 100%;
+}
+
+h1 {
     margin-bottom: 20px;
 }
 
-.container input {
+.form-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 48%;
+}
+
+.form-group h2 {
+    margin-bottom: 10px;
+}
+
+.form-group input {
     display: block;
-    width: 260px;
-    padding: 10px;
+    width: 350px; /* Increased the width */
+    padding: 10px; /* Increased the padding */
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 16px; /* Increased the font size */
 }
 
-.container button {
+input[type="text"], input[type="email"] {
+    width: 100%;
+}
+
+button {
     background-color: #0000ff;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 30px; /* Increased the padding */
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px; /* Increased the font size */
 }
 
-.container button:hover {
+button:hover {
     background-color: #0000cc;
 }
 

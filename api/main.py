@@ -58,6 +58,11 @@ async def get_index():
     with open(os.path.join(TEMPLATE_DIR, "html/index.html"), "r") as f:
         return HTMLResponse(content=f.read(), status_code=200)
 
+@app.get("/queue", response_class=HTMLResponse)
+async def get_index():
+    with open(os.path.join(TEMPLATE_DIR, "html/dashboard.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 add_routers(app)
