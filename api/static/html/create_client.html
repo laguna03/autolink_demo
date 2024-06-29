@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Client</title>
-    <link rel="stylesheet" href="../styles/client_styles.css">
+    <link rel="stylesheet" href="../static/styles/client_styles.css">
 </head>
 <body>
     <header>
@@ -12,15 +12,84 @@
     </header>
 
     <div class="container">
-        <form>
-        <h1>CREATE CLIENT</h1>
-        <input type="text" placeholder="First Name" required>
-        <input type="text" placeholder="Last Name" required>
-        <input type="email" placeholder="Email" required>
-        <input type="text" placeholder="DOB" required>
-        <input type="text" placeholder="Phone Number" required>
-        <button>CREATE</button>
+        <form id="create-client-form">
+            <h1>CREATE CLIENT</h1>
+            <div class="form-section">
+                <div class="form-group">
+                    <h2>Client</h2>
+                    <input type="text" id="first-name" placeholder="First Name" required>
+                    <input type="text" id="last-name" placeholder="Last Name" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="text" id="phone-number" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <h2>Vehicle</h2>
+                    <input type="text" id="license-plate" placeholder="License Plate" required>
+                    <input type="text" id="vin-number" placeholder="VIN Number" required>
+                    <input type="text" id="make" placeholder="Make" required>
+                    <input type="text" id="mileage" placeholder="Mileage" required>
+                    <input type="text" id="model" placeholder="Model" required>
+                    <input type="text" id="year" placeholder="Year" required>
+                </div>
+            </div>
+            <button type="submit">CREATE</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('create-client-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const clientData = {
+                client_id: uuidv4(),
+                first_name: document.getElementById('first-name').value,
+                last_name: document.getElementById('last-name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone-number').value
+            };
+
+            const vehicleData = {
+                vehicle_id: Math.floor(Math.random() * 100000),
+                client_id: clientData.client_id,
+                license_plate: document.getElementById('license-plate').value,
+                vin_number: document.getElementById('vin-number').value,
+                make: document.getElementById('make').value,
+                mileage: parseInt(document.getElementById('mileage').value),
+                model: document.getElementById('model').value,
+                year: parseInt(document.getElementById('year').value)
+            };
+
+            const response = await fetch('http://localhost:8000/create/create-client', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ client_data: clientData, vehicle_data: vehicleData })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.message);
+            } else {
+                alert(`Error: ${result.detail}`);
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.href = `/static/html/Success.html?client_id=${data.client_id}&vehicle_id=${data.vehicle_id}`;
+            } else {
+                alert(data.message);
+            }
+        })
+
+        function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0,
+                      v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+    </script>
 </body>
 </html>

@@ -34,9 +34,8 @@ function fetchQueueData() {
 									<td>${item.name}</td>
 									<td>
 											<select class="status-dropdown">
-													<option value="...">...</option>
-													<option value="In Process">In Process</option>
 													<option value="Pending">Pending</option>
+													<option value="In Process">In Process</option>
 													<option value="Completed">Completed</option>
 											</select>
 									</td>
