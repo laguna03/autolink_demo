@@ -10,6 +10,7 @@ from app.routers.queue import router as queue_router
 from app.routers.create_client_vehicle import router as create_client_vehicle_router
 
 
+
 def add_routers(app):
     app.include_router(health_router, prefix="/health", tags=["Health"])
     app.include_router(agent_router, prefix="/agent", tags=["Agents"])

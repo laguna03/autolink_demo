@@ -25,8 +25,8 @@ async def create_client_and_vehicle(data: ClientAndVehicleData):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.post("/create-appointment")
-async def create_appointment_endpoint(appointment_data: AppointmentData) -> dict:
-    create_appointment(appointment_data)
-    return {"message": "Appointment created successfully"}
+# @router.post("/create-appointment")
+# async def create_appointment_endpoint(appointment_data: AppointmentData) -> dict:
+#     create_appointment(appointment_data)
+#     return {"message": "Appointment created successfully"}
 

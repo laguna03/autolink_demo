@@ -68,6 +68,11 @@ async def get_index():
     with open(os.path.join(TEMPLATE_DIR, "html/create_client.html"), "r") as f:
         return HTMLResponse(content=f.read(), status_code=200)
 
+@app.get("/create-appointment", response_class=HTMLResponse)
+async def get_index():
+    with open(os.path.join(TEMPLATE_DIR, "html/create_appt.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
