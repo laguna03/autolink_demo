@@ -58,9 +58,10 @@ function fetchQueueData() {
 									<td>
 											<select class="service-dropdown">
 													<option value="Select Service">Select Service</option>
-													<option value="Oil Change" data-time="15">Oil Change</option>
-													<option value="Tire Rotation" data-time="20">Tire Rotation</option>
-													<option value="Brake Inspection" data-time="30">Brake Inspection</option>
+													<option value="Oil Change" data-time="30">Oil Change</option>
+													<option value="ABS" data-time="35">ABS</option>
+													<option value="Check Engine" data-time="35">Check Engine</option>
+													<option value="Front Train" data-time="35">Front Train</option>
 											</select>
 									</td>
 									<td class="timer-cell">00:00</td>
