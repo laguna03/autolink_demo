@@ -47,15 +47,21 @@ def add_to_queue(item: QueueItem):
     return {"message": "Client added to queue"}
 
 @router.post("/queue/start_service")
-async def start_service(item: QueueItem):
-    add_to_queue(item)
-    item_dict = item.model_dump()
-    if item_dict in queue:
-        queue.remove(item_dict)
-        ongoing_services.append(item_dict)
-        return {"message": "Service started"}
-    raise HTTPException(status_code=404, detail="Client not found in queue")
+def start_service(item: QueueItem):
+    global queue
+    # Find the item in the queue
+    for i, queued_item in enumerate(queue):
+        if (queued_item['name'] == item.name and
+            queued_item['model'] == item.model and
+            queued_item['license_plate'] == item.license_plate):
+            # Remove the item from the queue
+            queue.pop(i)
+            return {"message": "Service started and item removed from queue"}
+    raise HTTPException(status_code=404, detail="Item not found in queue")
 
+@router.get("/queue")
+def get_queue():
+    return queue
 @router.delete("/queue/{name}")
 async def delete_from_queue(name: str):
     global queue, ongoing_services
