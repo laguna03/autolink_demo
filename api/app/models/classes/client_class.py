@@ -19,6 +19,6 @@ class ClientResponse(BaseModel):
 
 class ClientInfo(BaseModel):
     first_name: str
-    last_name: str
+    model: str
     license_plate: str
     client_id: Optional[str] = None

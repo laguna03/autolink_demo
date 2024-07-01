@@ -4,10 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchClientsData() {
+    console.log("Fetching clients data..."); // Debugging message
     fetch('http://localhost:8080/client/clients')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            const tableBody = document.querySelector('#clients-table-body');
+            console.log("Data fetched:", data); // Debugging message
+            const tableBody = document.querySelector('#clients-table tbody');
             tableBody.innerHTML = '';  // Clear existing rows
 
             data.forEach(client => {
@@ -39,6 +46,7 @@ function fetchClientsData() {
 }
 
 function addToQueue(queueItem) {
+    console.log("Adding to queue:", queueItem); // Debugging message
     fetch('http://localhost:8080/queue/queue/add', {
         method: 'POST',
         headers: {
@@ -46,7 +54,12 @@ function addToQueue(queueItem) {
         },
         body: JSON.stringify(queueItem)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         console.log(data.message);
     })
