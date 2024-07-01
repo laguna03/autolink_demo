@@ -13,14 +13,13 @@ document.getElementById('create-client-form').addEventListener('submit', async f
         vehicle_id: Math.floor(Math.random() * 100000),
         client_id: clientData.client_id,
         license_plate: document.getElementById('license-plate').value,
-        vin_number: document.getElementById('vin-number').value,
         make: document.getElementById('make').value,
         mileage: parseInt(document.getElementById('mileage').value),
         model: document.getElementById('model').value,
         year: parseInt(document.getElementById('year').value)
     };
 
-    const response = await fetch('http://localhost:8000/create/create-client', {
+    const response = await fetch('http://localhost:8080/create/create-client', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

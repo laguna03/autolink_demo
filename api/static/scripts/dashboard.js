@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('add-client-button').addEventListener('click', function() {
 			const clientName = document.getElementById('client-name').value;
 			if (clientName) {
-					fetch(`http://localhost:8000/queue/queue/add`, {
+					fetch(`http://localhost:8080/queue/queue/add`, {
 							method: 'POST',
 							headers: {
 									'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchQueueData() {
-	fetch('http://localhost:8000/queue/queue')
+	fetch('http://localhost:8080/queue/queue')
 			.then(response => response.json())
 			.then(data => {
 					if (!data.queue || !data.ongoingServices) {
@@ -58,9 +58,10 @@ function fetchQueueData() {
 									<td>
 											<select class="service-dropdown">
 													<option value="Select Service">Select Service</option>
-													<option value="Oil Change" data-time="15">Oil Change</option>
-													<option value="Tire Rotation" data-time="20">Tire Rotation</option>
-													<option value="Brake Inspection" data-time="30">Brake Inspection</option>
+													<option value="Oil Change" data-time="35">Oil Change</option>
+													<option value="Front Train" data-time="90">Front Train</option>
+													<option value="ABS" data-time="30">ABS</option>
+													<option value="Check Engine" data-time="40">Check Engine</option>
 											</select>
 									</td>
 									<td class="timer-cell">00:00</td>
@@ -84,7 +85,7 @@ function fetchQueueData() {
 									const clientName = row.querySelector('td').innerText;
 									const model = row.cells[1].innerText;
 									const license_plate = row.cells[2].innerText;
-									fetch(`http://localhost:8000/queue/start_service`, {
+									fetch(`http://localhost:8080/queue/start_service`, {
 											method: 'POST',
 											headers: {
 													'Content-Type': 'application/json'
@@ -128,7 +129,7 @@ function fetchQueueData() {
 
 									if (statusDropdown.value === 'Completed') {
 											const clientName = ongoingServicesTableBody.rows[index].querySelector('td').innerText;
-											fetch(`http://localhost:8000/queue/queue/${clientName}`, {
+											fetch(`http://localhost:8080/queue/queue/${clientName}`, {
 													method: 'DELETE'
 											})
 											.then(response => {

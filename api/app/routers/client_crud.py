@@ -2,7 +2,8 @@ from app.models.client_operations import create_client, read_client, update_clie
 from fastapi import APIRouter, HTTPException
 from uuid import UUID
 from typing import List, Dict
-
+from app.services.postgre_connector import connect_to_database
+from app.models.classes.client_class import ClientInfo
 
 
 router = APIRouter()
@@ -37,3 +38,26 @@ async def get_dashboard_data_endpoint() -> List[Dict[str, str]]:
         return data
     else:
         raise HTTPException(status_code=500, detail="Error retrieving data")
+
+@router.get("/clients", response_model=List[ClientInfo])
+async def get_clients():
+    conn = connect_to_database()
+    try:
+        cur = conn.cursor()
+        query = """
+            SELECT c.first_name, v.model, v.license_plate, c.client_id
+            FROM autolink.clients AS c
+            JOIN autolink.vehicles AS v ON c.client_id = v.client_id
+            """
+        cur.execute(query)
+        rows = cur.fetchall()
+        clients = [
+            ClientInfo(first_name=row[0], model=row[1], license_plate=row[2], client_id=row[3])
+            for row in rows
+        ]
+        return clients
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        cur.close()
+        conn.close()

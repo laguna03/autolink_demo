@@ -8,14 +8,13 @@ def create_vehicle(vehicle_data):
     try:
         cur = conn.cursor()
         query = """
-            INSERT INTO autolink.vehicles (vehicle_id, client_id, license_plate, vin_number, make, mileage, model, year)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO autolink.vehicles (vehicle_id, client_id, license_plate, make, mileage, model, year)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
         cur.execute(query, (
             vehicle_data.vehicle_id,
             str(vehicle_data.client_id),
             vehicle_data.license_plate,
-            vehicle_data.vin_number,
             vehicle_data.make,
             vehicle_data.mileage,
             vehicle_data.model,
@@ -41,11 +40,10 @@ def read_vehicle(vehicle_id):
             id=vehicle[0],
             client_id=UUID(vehicle[1]),
             license_plate=vehicle[2],
-            vin_number=vehicle[3],
-            make=vehicle[4],
-            mileage=vehicle[5],
-            model=vehicle[6],
-            year=vehicle[7]
+            make=vehicle[3],
+            mileage=vehicle[4],
+            model=vehicle[5],
+            year=vehicle[6]
         )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -59,13 +57,12 @@ def update_vehicle(vehicle_id, vehicle_data):
         cur = conn.cursor()
         query = """
             UPDATE vehicles
-            SET client_id = %s, license_plate = %s, vin_number = %s, make = %s, mileage = %s, model = %s, year = %s
+            SET client_id = %s, license_plate = %s, make = %s, mileage = %s, model = %s, year = %s
             WHERE vehicle_id = %s
         """
         cur.execute(query, (
             str(vehicle_data.client_id),
             vehicle_data.license_plate,
-            vehicle_data.vin_number,
             vehicle_data.make,
             vehicle_data.mileage,
             vehicle_data.model,
