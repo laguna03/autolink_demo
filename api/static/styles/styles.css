@@ -12,6 +12,33 @@ body {
     display: flex;
 }
 
+.ongoing-services-tag {
+    width: 70px;
+    height: 30px;
+    background-color: #eaeaf9;
+    border: 1px solid hwb(240 2% 28%);
+    margin: 20px;
+    padding: 10px;
+    border-radius: 55%;
+    text-align: center;
+    line-height: -40px;
+    font-size: 13px;
+}
+
+.queue-list-tag {
+    width: 50px;
+    height: 15px;
+    background-color: #eaeaf9;
+    border: 1px solid hwb(240 2% 28%);
+    margin: 20px;
+    padding: 10px;
+    border-radius: 55%;
+    text-align: center;
+    line-height: -40px;
+    font-size: 14px;
+}
+
+
 .sidebar {
     top: 50px;
     width: 250px;
@@ -107,15 +134,11 @@ body {
     background-color: #93aef9;
 }
 
-.sidebar .sales-report-button:hover {
+.sidebar .about-button:hover {
     background-color: #93aef9;
 }
 
-.sidebar .appointments-button:hover {
-    background-color: #93aef9;
-}
-
-.sidebar .units-button:hover {
+.sidebar .addnew-button:hover {
     background-color: #93aef9;
 }
 
@@ -231,7 +254,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 150px; /* Decrease this value to make the boxes smaller */
+    width: 350px; /* Decrease this value to make the boxes smaller */
     height: 120px; /* Decrease this value to make the boxes smaller */
     transition: transform 0.3s;
     border: 5px solid hwb(240 2% 28%);
