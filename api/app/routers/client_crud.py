@@ -52,7 +52,7 @@ async def get_clients():
         cur.execute(query)
         rows = cur.fetchall()
         clients = [
-            ClientInfo(first_name=row[0], model=row[1], license_plate=row[2], client_id=row[3])
+            ClientInfo(first_name=row[0], model=row[1], license_plate=row[2])
             for row in rows
         ]
         return clients
