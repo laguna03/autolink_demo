@@ -152,6 +152,11 @@ function fetchQueueData() {
 			.catch(error => console.error('Error fetching queue data:', error));
 }
 
+function updateCounters(queueCount, visitsCount) {
+    document.getElementById('queue-count').innerText = queueCount;
+    document.getElementById('visits-count').innerText = visitsCount;
+}
+
 function startTimer(cell, minutes) {
 	let time = minutes * 60;
 	const interval = setInterval(() => {
