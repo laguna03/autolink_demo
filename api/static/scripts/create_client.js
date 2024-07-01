@@ -20,7 +20,7 @@ document.getElementById('create-client-form').addEventListener('submit', async f
         year: parseInt(document.getElementById('year').value)
     };
 
-    const response = await fetch('http://localhost:8000/create/create-client', {
+    const response = await fetch('http://localhost:8080/create/create-client', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
