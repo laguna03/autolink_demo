@@ -19,7 +19,7 @@ async def read_client_endpoint(client_id: UUID = None, first_name: str = None, l
 @router.put("/{client_id}")
 async def update_clients_endpoint(client_id: UUID = None, first_name: str = None, last_name: str = None, email: str = None, phone: str = None, client_data: ClientData = None) -> dict:
     # Ensure that the client ID provided in the path matches the client ID in the request body
-    if client_id != client_data.id:
+    if client_id != client_data.client_id:
         raise HTTPException(status_code=400, detail="Client ID in path does not match client ID in request body")
     # Update the client
     update_client(client_id, client_data)

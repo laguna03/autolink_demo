@@ -2,14 +2,8 @@ from pydantic import BaseModel
 from datetime import datetime, date
 from uuid import UUID
 
-
 class AppointmentData(BaseModel):
-    appt_id: int
-    agent_id: UUID
-    sale_id: int
+    appointment_id: int
     client_id: UUID
-    service_id: int
-    vehicle_id: int
-    created_at: datetime
-    status: str
-    appt_time: date
+    vehicle_id: UUID
+    appointment_time: datetime

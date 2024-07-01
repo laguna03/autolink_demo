@@ -1,87 +1,216 @@
 document.addEventListener('DOMContentLoaded', () => {
-	function fetchQueueData() {
-			fetch('http://localhost:8000/queue/queue')
+	fetchQueueData();
+
+	document.getElementById('add-client-button').addEventListener('click', function() {
+			const clientName = document.getElementById('client-name').value;
+			if (clientName) {
+					fetch(`http://localhost:8000/queue/queue/add`, {
+							method: 'POST',
+							headers: {
+									'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({ name: clientName })
+					})
 					.then(response => response.json())
 					.then(data => {
-							const tableBody = document.querySelector('#queue-table-body');
-							tableBody.innerHTML = '';  // Clear existing rows
-
-							data.forEach(item => {
-									const row = document.createElement('tr');
-									row.innerHTML = `
-											<td>${item.name}</td>
-											<td>
-													<select class="status-dropdown" data-name="${item.name}">
-															<option value="">...</option>
-															<option value="In Process">In Process</option>
-															<option value="Pending">Pending</option>
-															<option value="Completed">Completed</option>
-													</select>
-											</td>
-											<td>
-													<button class="update-button" data-name="${item.name}">Update</button>
-											</td>
-									`;
-									tableBody.appendChild(row);
-							});
-
-							// Add event listeners to update buttons
-							const updateButtons = document.querySelectorAll('.update-button');
-							updateButtons.forEach(button => {
-									button.addEventListener('click', function() {
-											const itemName = this.getAttribute('data-name');
-											const dropdown = document.querySelector(`.status-dropdown[data-name="${itemName}"]`);
-											const selectedValue = dropdown.value;
-
-											if (selectedValue === 'Completed') {
-													fetch(`http://localhost:8000/queue/${itemName}`, {
-															method: 'DELETE'
-													})
-													.then(response => {
-															if (response.ok) {
-																	return response.json();
-															}
-															throw new Error('Network response was not ok.');
-													})
-													.then(data => {
-															console.log(data.message);
-															// Refresh the queue data
-															fetchQueueData();
-													})
-													.catch(error => console.error('Error deleting item:', error));
-											} else {
-													// Lógica para manejar otros estados
-													console.log(`Status for ${itemName} updated to ${selectedValue}`);
-													// Aquí puedes agregar lógica para manejar otros estados
-													// Por ejemplo, actualizar el estado en el servidor
-													// Y luego refrescar los datos del queue
-											}
-									});
-							});
+							console.log(data.message);
+							fetchQueueData();
 					})
-					.catch(error => console.error('Error fetching queue data:', error));
-	}
-
-	// Fetch queue data initially
-	fetchQueueData();
-});
-
-
-document.addEventListener('DOMContentLoaded', function() {
-	var sidebar = document.querySelector('.sidebar');
-	var button = document.querySelector('.minimize-button');
-	var minImg = document.querySelector('.minimize-button-img');
-	var maxImg = document.querySelector('.maximize-button-img');
-
-	button.addEventListener('click', function() {
-			sidebar.classList.toggle('minimized');
-
-			if (sidebar.classList.contains('minimized')) {
-					minImg.style.display = 'none';
-					maxImg.style.display = 'block';
-			} else {
-					minImg.style.display = 'block';
-					maxImg.style.display = 'none';
+					.catch(error => console.error('Error adding client to queue:', error));
 			}
 	});
 });
+
+function fetchQueueData() {
+	fetch('http://localhost:8000/queue/queue')
+			.then(response => response.json())
+			.then(data => {
+					if (!data.queue || !data.ongoingServices) {
+							throw new Error('Invalid response structure');
+					}
+
+					const queueTableBody = document.querySelector('#queue-table-body');
+					const ongoingServicesTableBody = document.querySelector('#ongoing-services-table-body');
+					queueTableBody.innerHTML = '';  // Clear existing rows
+					ongoingServicesTableBody.innerHTML = '';  // Clear existing rows
+
+					// Populate Queue Table
+					data.queue.forEach(item => {
+							const row = document.createElement('tr');
+							row.innerHTML = `
+									<td>${item.name}</td>
+									<td>${item.model}</td>
+									<td>${item.license_plate}</td>
+									<td>
+											<button class="start-service-button">Start Service</button>
+									</td>
+							`;
+							queueTableBody.appendChild(row);
+					});
+
+					// Populate Ongoing Services Table
+					data.ongoingServices.forEach(item => {
+							const row = document.createElement('tr');
+							row.innerHTML = `
+									<td>${item.name}</td>
+									<td>${item.model}</td>
+									<td>${item.license_plate}</td>
+									<td>
+											<select class="service-dropdown">
+													<option value="Select Service">Select Service</option>
+													<option value="Oil Change" data-time="30">Oil Change</option>
+													<option value="ABS" data-time="35">ABS</option>
+													<option value="Check Engine" data-time="35">Check Engine</option>
+													<option value="Front Train" data-time="35">Front Train</option>
+											</select>
+									</td>
+									<td class="timer-cell">00:00</td>
+									<td>
+											<select class="status-dropdown">
+													<option value="Pending">Pending</option>
+													<option value="In Process">In Process</option>
+													<option value="Completed">Completed</option>
+											</select>
+									</td>
+									<td>
+											<button class="update-button">Update</button>
+									</td>
+							`;
+							ongoingServicesTableBody.appendChild(row);
+					});
+
+					document.querySelectorAll('.start-service-button').forEach((button, index) => {
+						button.addEventListener('click', () => {
+							const row = queueTableBody.rows[index];
+							const clientName = row.querySelector('td').innerText;
+							const model = row.cells[1].innerText;
+							const license_plate = row.cells[2].innerText;
+							fetch('http://localhost:8000/queue/queue/add', {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify({ name: clientName, model: model, license_plate: license_plate })
+							})
+							.then(response => response.json())
+							.then(data => {
+								console.log(data.message);
+								fetchQueueData();
+							})
+							.catch(error => console.error('Error starting service:', error));
+						});
+					});
+
+					function fetchQueueData() {
+						fetch('http://localhost:8000/queue/queue')
+							.then(response => response.json())
+							.then(data => {
+								renderQueueTable(data);
+							})
+							.catch(error => console.error('Error fetching queue data:', error));
+					}
+
+					function renderQueueTable(data) {
+						queueTableBody.innerHTML = ''; // Clear existing rows
+						data.forEach(item => {
+							const row = document.createElement('tr');
+							row.innerHTML = `
+								<td>${item.name}</td>
+								<td>${item.model}</td>
+								<td>${item.license_plate}</td>
+								<td><button class="start-service-button">Start Service</button></td>
+							`;
+							queueTableBody.appendChild(row);
+						});
+
+						// Reattach event listeners after re-rendering the table
+						document.querySelectorAll('.start-service-button').forEach((button, index) => {
+							button.addEventListener('click', () => {
+								const row = queueTableBody.rows[index];
+								const clientName = row.querySelector('td').innerText;
+								const model = row.cells[1].innerText;
+								const license_plate = row.cells[2].innerText;
+								fetch('http://localhost:8000/queue/queue/start-service', {
+									method: 'POST',
+									headers: {
+										'Content-Type': 'application/json'
+									},
+									body: JSON.stringify({ name: clientName, model: model, license_plate: license_plate })
+								})
+								.then(response => response.json())
+								.then(data => {
+									console.log(data.message);
+									fetchQueueData();
+								})
+								.catch(error => console.error('Error starting service:', error));
+							});
+						});
+					}
+
+
+
+
+					document.querySelectorAll('.service-dropdown').forEach((dropdown, index) => {
+							dropdown.addEventListener('change', () => {
+									const selectedOption = dropdown.options[dropdown.selectedIndex];
+									const time = selectedOption.getAttribute('data-time');
+									const timerCell = ongoingServicesTableBody.rows[index].querySelector('.timer-cell');
+									if (time) {
+											timerCell.innerText = `00:${time}`;
+									}
+							});
+					});
+
+					document.querySelectorAll('.update-button').forEach((button, index) => {
+							button.addEventListener('click', () => {
+									const statusDropdown = ongoingServicesTableBody.rows[index].querySelector('.status-dropdown');
+									const serviceDropdown = ongoingServicesTableBody.rows[index].querySelector('.service-dropdown');
+									const timerCell = ongoingServicesTableBody.rows[index].querySelector('.timer-cell');
+
+									if (statusDropdown.value === 'In Process') {
+											const selectedOption = serviceDropdown.options[serviceDropdown.selectedIndex];
+											const time = selectedOption.getAttribute('data-time');
+											if (time) {
+													timerCell.innerText = `00:${time}`;
+													startTimer(timerCell, time);
+											}
+									}
+
+									if (statusDropdown.value === 'Completed') {
+											const clientName = ongoingServicesTableBody.rows[index].querySelector('td').innerText;
+											fetch(`http://localhost:8000/queue/queue/${clientName}`, {
+													method: 'DELETE'
+											})
+											.then(response => {
+													if (response.ok) {
+															return response.json();
+													}
+													throw new Error('Network response was not ok.');
+											})
+											.then(data => {
+													console.log(data.message);
+													// Refresh the queue data
+													fetchQueueData();
+											})
+											.catch(error => console.error('Error deleting client from queue:', error));
+									}
+							});
+					});
+			})
+			.catch(error => console.error('Error fetching queue data:', error));
+}
+
+function startTimer(cell, minutes) {
+	let time = minutes * 60;
+	const interval = setInterval(() => {
+			const mins = Math.floor(time / 60);
+			const secs = time % 60;
+			cell.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+			time--;
+
+			if (time < 0) {
+					clearInterval(interval);
+					cell.innerText = 'Completed';
+			}
+	}, 1000);
+}
