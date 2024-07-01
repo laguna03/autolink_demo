@@ -62,6 +62,7 @@ function fetchQueueData() {
 													<option value="Front Train" data-time="90">Front Train</option>
 													<option value="ABS" data-time="30">ABS</option>
 													<option value="Check Engine" data-time="40">Check Engine</option>
+													<option value="Grace Time" data-time="15">Grace Time</option>
 											</select>
 									</td>
 									<td class="timer-cell">00:00</td>
