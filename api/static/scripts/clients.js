@@ -7,7 +7,7 @@ function fetchClientsData() {
     fetch('http://localhost:8080/client/clients')
         .then(response => response.json())
         .then(data => {
-            const tableBody = document.querySelector('#clients-table tbody');
+            const tableBody = document.querySelector('#clients-table-body');
             tableBody.innerHTML = '';  // Clear existing rows
 
             data.forEach(client => {
@@ -17,7 +17,7 @@ function fetchClientsData() {
                     <td>${client.model}</td>
                     <td>${client.license_plate}</td>
                     <td>
-                        <button class="add-to-queue-button" data-client-id="${client.client_id}">Add to Queue</button>
+                        <button class="add-to-queue-button" data-client-info='${JSON.stringify(client)}'>Add to Queue</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
@@ -25,16 +25,13 @@ function fetchClientsData() {
 
             document.querySelectorAll('.add-to-queue-button').forEach(button => {
                 button.addEventListener('click', () => {
-                    const clientId = button.getAttribute('data-client-id');
-                    const client = data.find(c => c.client_id === clientId);
-                    if (client) {
-                        const queueItem = {
-                            name: client.first_name,
-                            model: client.model,
-                            license_plate: client.license_plate
-                        };
-                        addToQueue(queueItem);
-                    }
+                    const clientInfo = JSON.parse(button.getAttribute('data-client-info'));
+                    const queueItem = {
+                        name: clientInfo.first_name,
+                        model: clientInfo.model,
+                        license_plate: clientInfo.license_plate
+                    };
+                    addToQueue(queueItem);
                 });
             });
         })
@@ -42,7 +39,7 @@ function fetchClientsData() {
 }
 
 function addToQueue(queueItem) {
-    fetch('http://localhost:8080/queue/queue/add_client', {
+    fetch('http://localhost:8080/queue/queue/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -45,14 +45,14 @@ async def get_clients():
     try:
         cur = conn.cursor()
         query = """
-            SELECT c.first_name, c.last_name, v.license_plate, c.client_id
+            SELECT c.first_name, v.model, v.license_plate, c.client_id
             FROM autolink.clients AS c
             JOIN autolink.vehicles AS v ON c.client_id = v.client_id
             """
         cur.execute(query)
         rows = cur.fetchall()
         clients = [
-            ClientInfo(first_name=row[0], last_name=row[1], license_plate=row[2], client_id=row[3])
+            ClientInfo(first_name=row[0], model=row[1], license_plate=row[2], client_id=row[3])
             for row in rows
         ]
         return clients

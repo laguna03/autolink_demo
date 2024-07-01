@@ -5,25 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clients List</title>
-    <link rel="stylesheet" href="../static/styles/clients.css">
+    <link rel="stylesheet" href="../static/styles/client.css">
     <script defer src="../static/scripts/clients.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Clients List</h1>
-        <table id="clients-table">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>License Plate</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Client rows will be populated here by JavaScript -->
-            </tbody>
-        </table>
+    <div class="sidebar">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/appointments">Appointments</a>
+        <a href="/units">Units</a>
+        <a href="/clients" class="active">Clients</a>
+        <a href="/login" class="logout"><button class="logout-button"><img src="../static/images/logout-button.png" class="logout-button-img"></button></a>
+    </div>
+    <div class="content">
+        <div class="header">
+            <h1>Clients List</h1>
+        </div>
+        <div class="table-container">
+            <table id="clients-table" class="table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Model</th>
+                        <th>License Plate</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Client rows will be populated here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
