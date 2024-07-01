@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import psycopg2
 from app.settings.application import get_settings
 from app.settings.logger import get_logger
@@ -39,3 +40,9 @@ def create_cursor(conn):
     except (Exception, psycopg2.Error) as error:
         logger.error("Error while creating cursor:", error)
         return None
+
+# engine = create_engine("postgresql://manuel:mitsubishi@localhost/autolinkdb")
+
+# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Base = declarative_base()

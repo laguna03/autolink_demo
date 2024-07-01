@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="../static/styles/styles.css">
+<<<<<<< HEAD
+=======
+    <script defer src="../static/scripts/dashboard.js"></script>
+>>>>>>> manu
 </head>
 <body>
     <div class="sidebar-button-container">
@@ -47,51 +51,20 @@
             </div>
         </div>
 
-        <div class="table-container">
-            <table>
+        <div class="table">
+            <table class="table-container table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Queue</th>
-                        <th>ET</th>
-                        <th>Service Code</th>
+                        <th>Status</th>
+                        <th>Service</th>
+                        <th>Timer</th>
+                        <th>Update</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td> Luis Perez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:09:54</td>
-                        <td>FRONT TRAIN</td>
-                    </tr>
-                    <tr>
-                        <td>Angel Gonzalez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:16:32</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Carlos Ortiz <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:29:10</td>
-                        <td>ABS</td>
-                    </tr>
-                    <tr>
-                        <td>Esteban Garcia <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:25:00</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Carmen Jimenez <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:30:00</td>
-                        <td>CHECK ENGINE</td>
-                    </tr>
-                    <tr>
-                        <td>Gabriel Colon <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>00:25:00</td>
-                        <td>OIL CHANGE</td>
-                    </tr>
-                    <tr>
-                        <td>Manuel Matos <select><option>...</option><option>In Process</option><option>Pending</option><option>Completed</option></select></td>
-                        <td>01:30:00</td>
-                        <td>FRONT TRAIN</td>
-                    </tr>
+                <tbody id="queue-table-body">
+                    <!-- Aquí se llenarán los datos -->
                 </tbody>
             </table>
 

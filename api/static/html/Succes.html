@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <link rel="stylesheet" href="../static/styles/client_styles.css">
+</head>
+<body>
+    <header>
+        <img src="../static/images/logo_icon_al.png" alt="AutoLink Logo" class="logo">
+    </header>
+
+    <div class="container">
+        <h1>Client Successfully Created</h1>
+        <button id="create-appointment-button">Create Appointment</button>
+    </div>
+
+    <script>
+        // Obtener los parámetros de la URL para obtener client_id y vehicle_id
+        const urlParams = new URLSearchParams(window.location.search);
+        const client_id = urlParams.get('client_id');
+        const vehicle_id = urlParams.get('vehicle_id');
+
+        document.getElementById('create-appointment-button').addEventListener('click', function () {
+            window.location.href = `/create_appointment.html?client_id=${client_id}&vehicle_id=${vehicle_id}`;
+        });
+    </script>
+</body>
+</html>

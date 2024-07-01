@@ -3,20 +3,24 @@ from app.services import postgre_connector
 from .classes.appointment_class import AppointmentData
 
 
-def create_appointment(appointment_data: AppointmentData):
+from fastapi import HTTPException
+from app.services import postgre_connector
+from uuid import UUID
+from .classes.appointment_class import AppointmentData
+
+def create_appointment(appointment_data):
     conn = postgre_connector.connect_to_database()
     try:
         cur = conn.cursor()
-        query = "INSERT INTO autolink.appointments (appt_id, agent_id, client_id, service_id, vehicle_id, created_at, status, appt_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        query = """
+            INSERT INTO autolink.appointments (appointment_id, client_id, vehicle_id, appointment_time)
+            VALUES (%s, %s, %s, %s)
+        """
         cur.execute(query, (
-            appointment_data.appt_id,
-            str(appointment_data.agent_id),
+            appointment_data.appointment_id,
             str(appointment_data.client_id),
-            appointment_data.service_id,
-            appointment_data.vehicle_id,
-            appointment_data.created_at,
-            appointment_data.status,
-            appointment_data.appt_time
+            str(appointment_data.vehicle_id),
+            appointment_data.appointment_time
         ))
         conn.commit()
     except Exception as e:
@@ -24,6 +28,7 @@ def create_appointment(appointment_data: AppointmentData):
     finally:
         cur.close()
         conn.close()
+
 
 
 def read_appointment(appointment_id: int):

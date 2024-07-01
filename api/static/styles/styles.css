@@ -301,3 +301,37 @@ select {
         transform: rotate(0);
     }
 }
+
+
+.add-client-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.add-client-container h2 {
+    margin-bottom: 10px;
+}
+
+.add-client-container form {
+    display: inline-block;
+}
+
+.add-client-container input {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-client-container button {
+    padding: 10px 20px;
+    background-color: #0000ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-client-container button:hover {
+    background-color: #0000cc;
+}

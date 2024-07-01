@@ -45,7 +45,11 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "static")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
+<<<<<<< HEAD
     with open(os.path.join(TEMPLATE_DIR, "html/landing.html"), "r") as f:
+=======
+    with open(os.path.join(TEMPLATE_DIR, "html/create_agent.html"), "r") as f:
+>>>>>>> manu
         return HTMLResponse(content=f.read(), status_code=200)
 
 @app.get("/login", response_class=HTMLResponse)
@@ -58,15 +62,38 @@ async def get_index():
     with open(os.path.join(TEMPLATE_DIR, "html/index.html"), "r") as f:
         return HTMLResponse(content=f.read(), status_code=200)
 
+<<<<<<< HEAD
 @app.get("/create_agent", response_class=HTMLResponse)
 async def read_root():
     with open(os.path.join(TEMPLATE_DIR, "html/create_agent.html"), "r") as f:
         return HTMLResponse(content=f.read(), status_code=200)
 
+=======
+@app.get("/queue", response_class=HTMLResponse)
+async def get_index():
+    with open(os.path.join(TEMPLATE_DIR, "html/dashboard.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
+@app.get("/create-client", response_class=HTMLResponse)
+async def get_index():
+    with open(os.path.join(TEMPLATE_DIR, "html/create_client.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
+@app.get("/create-appointment", response_class=HTMLResponse)
+async def get_index():
+    with open(os.path.join(TEMPLATE_DIR, "html/create_appt.html"), "r") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
+
+>>>>>>> manu
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 add_routers(app)
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("API_PORT", "8000")))
+=======
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("API_PORT", "8080")))
+>>>>>>> manu

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/styles/styles.css">
+    <script defer src="../static/scripts/dashboard.js"></script>
+</head>
+<body>
+    <div class="sidebar-button-container">
+        <button class="minimize-button">
+            <img src="../static/images/min-button.png" class="minimize-button-img">
+            <img src="../static/images/max-button.png" class="maximize-button-img" style="display: none;">
+        </button>
+    </div>
+
+    <div class="sidebar">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#" class="appointments-button">Appointments</a>
+        <a href="#" class="units-button">Units</a>
+        <a href="#" class="clients-button">Clients</a>
+        <a href="/login" class="logout"><button class="logout-button"><img src="../static/images/logout-button.png" class="logout-button-img"></button></a>
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <h1></h1>
+            <img src="../static/images/logo_white_al.png" alt="AutoLink Logo" class="logo">
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <h2>24</h2>
+                <p>Appointments</p>
+            </div>
+            <div class="stat-box">
+                <h2>12</h2>
+                <p>Visits</p>
+            </div>
+            <div class="stat-box">
+                <h2>3</h2>
+                <p>No Show</p>
+            </div>
+            <div class="stat-box">
+                <h2>7</h2>
+                <p>Queue</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h3>Ongoing Services</h3>
+            <table id="ongoing-services-table" class="table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Queue</th>
+                        <th>Vehicle</th>
+                        <th>License Plate</th>
+                        <th>Service</th>
+                        <th>Timer</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody id="ongoing-services-table-body">
+                    <!-- Rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h3>Queue</h3>
+            <table id="queue-table" class="table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Queue</th>
+                        <th>Vehicle</th>
+                        <th>License Plate</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="queue-table-body">
+                    <!-- Rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="add-client-container">
+            <h3>Add Existing Client to Queue</h3>
+            <input type="text" id="client-name" placeholder="Client Name">
+            <button id="add-client-button">Add to Queue</button>
+        </div>
+    </div>
+    <!-- <script src="../static/scripts/dashboard.js"></script> -->
+</body>
+</html>

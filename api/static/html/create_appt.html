@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Appointment</title>
+    <link rel="stylesheet" href="../static/styles/create_styles.css">
+</head>
+<body>
+    <header>
+        <img src="../static/images/logo_icon_al.png" alt="AutoLink Logo" class="logo">
+    </header>
+
+    <div class="container">
+        <form id="create-appointment-form">
+            <h1>CREATE APPOINTMENT</h1>
+            <input type="hidden" id="client-id" name="client_id" value="">
+            <input type="hidden" id="vehicle-id" name="vehicle_id" value="">
+            <input type="datetime-local" id="appointment-time" name="appointment_time" required>
+            <button type="submit">CREATE</button>
+        </form>
+    </div>
+</body>
+<script>
+    document.getElementById('create-appointment-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const client_id = document.getElementById('client-id').value;
+        const vehicle_id = document.getElementById('vehicle-id').value;
+        const appointment_time = document.getElementById('appointment-time').value;
+
+        fetch('http://localhost:8000/create-appointment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ client_id, vehicle_id, appointment_time })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Appointment created successfully") {
+                window.location.href = '/queue';
+            } else {
+                alert('Error creating appointment. Try again.');
+            }
+        })
+        .catch(error => {
+            alert('Error creating appointment. Try again.');
+            console.error('Error:', error);
+        });
+    });
+
+    // Obtener los parámetros de la URL para obtener client_id y vehicle_id
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('client-id').value = urlParams.get('client_id');
+    document.getElementById('vehicle-id').value = urlParams.get('vehicle_id');
+</script>
+</html>
