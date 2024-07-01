@@ -58,10 +58,9 @@ function fetchQueueData() {
 									<td>
 											<select class="service-dropdown">
 													<option value="Select Service">Select Service</option>
-													<option value="Oil Change" data-time="30">Oil Change</option>
-													<option value="ABS" data-time="35">ABS</option>
-													<option value="Check Engine" data-time="35">Check Engine</option>
-													<option value="Front Train" data-time="35">Front Train</option>
+													<option value="Oil Change" data-time="15">Oil Change</option>
+													<option value="Tire Rotation" data-time="20">Tire Rotation</option>
+													<option value="Brake Inspection" data-time="30">Brake Inspection</option>
 											</select>
 									</td>
 									<td class="timer-cell">00:00</td>
@@ -80,75 +79,26 @@ function fetchQueueData() {
 					});
 
 					document.querySelectorAll('.start-service-button').forEach((button, index) => {
-						button.addEventListener('click', () => {
-							const row = queueTableBody.rows[index];
-							const clientName = row.querySelector('td').innerText;
-							const model = row.cells[1].innerText;
-							const license_plate = row.cells[2].innerText;
-							fetch('http://localhost:8000/queue/queue/add', {
-								method: 'POST',
-								headers: {
-									'Content-Type': 'application/json'
-								},
-								body: JSON.stringify({ name: clientName, model: model, license_plate: license_plate })
-							})
-							.then(response => response.json())
-							.then(data => {
-								console.log(data.message);
-								fetchQueueData();
-							})
-							.catch(error => console.error('Error starting service:', error));
-						});
-					});
-
-					function fetchQueueData() {
-						fetch('http://localhost:8000/queue/queue')
-							.then(response => response.json())
-							.then(data => {
-								renderQueueTable(data);
-							})
-							.catch(error => console.error('Error fetching queue data:', error));
-					}
-
-					function renderQueueTable(data) {
-						queueTableBody.innerHTML = ''; // Clear existing rows
-						data.forEach(item => {
-							const row = document.createElement('tr');
-							row.innerHTML = `
-								<td>${item.name}</td>
-								<td>${item.model}</td>
-								<td>${item.license_plate}</td>
-								<td><button class="start-service-button">Start Service</button></td>
-							`;
-							queueTableBody.appendChild(row);
-						});
-
-						// Reattach event listeners after re-rendering the table
-						document.querySelectorAll('.start-service-button').forEach((button, index) => {
 							button.addEventListener('click', () => {
-								const row = queueTableBody.rows[index];
-								const clientName = row.querySelector('td').innerText;
-								const model = row.cells[1].innerText;
-								const license_plate = row.cells[2].innerText;
-								fetch('http://localhost:8000/queue/queue/start-service', {
-									method: 'POST',
-									headers: {
-										'Content-Type': 'application/json'
-									},
-									body: JSON.stringify({ name: clientName, model: model, license_plate: license_plate })
-								})
-								.then(response => response.json())
-								.then(data => {
-									console.log(data.message);
-									fetchQueueData();
-								})
-								.catch(error => console.error('Error starting service:', error));
+									const row = queueTableBody.rows[index];
+									const clientName = row.querySelector('td').innerText;
+									const model = row.cells[1].innerText;
+									const license_plate = row.cells[2].innerText;
+									fetch(`http://localhost:8000/queue/start_service`, {
+											method: 'POST',
+											headers: {
+													'Content-Type': 'application/json'
+											},
+											body: JSON.stringify({ name: clientName, model: model, license_plate: license_plate })
+									})
+									.then(response => response.json())
+									.then(data => {
+											console.log(data.message);
+											fetchQueueData();
+									})
+									.catch(error => console.error('Error starting service:', error));
 							});
-						});
-					}
-
-
-
+					});
 
 					document.querySelectorAll('.service-dropdown').forEach((dropdown, index) => {
 							dropdown.addEventListener('change', () => {
