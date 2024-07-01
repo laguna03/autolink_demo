@@ -14,7 +14,7 @@ function fetchClientsData() {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${client.first_name}</td>
-                    <td>${client.last_name}</td>
+                    <td>${client.model}</td>
                     <td>${client.license_plate}</td>
                     <td>
                         <button class="add-to-queue-button" data-client-id="${client.client_id}">Add to Queue</button>
@@ -29,7 +29,7 @@ function fetchClientsData() {
                     const client = data.find(c => c.client_id === clientId);
                     if (client) {
                         const queueItem = {
-                            name: `${client.first_name} ${client.last_name}`,
+                            name: client.first_name,
                             model: client.model,
                             license_plate: client.license_plate
                         };
@@ -42,7 +42,7 @@ function fetchClientsData() {
 }
 
 function addToQueue(queueItem) {
-    fetch('http://localhost:8080/queue/queue/add', {
+    fetch('http://localhost:8080/queue/queue/add_client', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

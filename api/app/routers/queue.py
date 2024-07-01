@@ -17,33 +17,15 @@ ongoing_services = []
 async def get_queue():
     return {"queue": queue, "ongoingServices": ongoing_services}
 
-# @router.get("/queue")
-# async def get_queue():
-#     global queue  # Usar la variable global queue
-#     conn = connect_to_database()
-#     try:
-#         cur = conn.cursor()
-#         query = """
-#             SELECT c.first_name, v.model, v.license_plate
-#             FROM autolink.clients AS c
-#             JOIN autolink.vehicles AS v ON c.client_id = v.client_id
-#             """
-#         cur.execute(query)
-#         rows = cur.fetchall()
-#         queue.clear()  # Limpiar la lista antes de llenarla de nuevo
-#         for row in rows:
-#             queue.append(QueueItem(name=row[0], model=row[1], license_plate=row[2]).model_dump())
-#         return {"queue": queue, "ongoingServices": ongoing_services}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-#     finally:
-#         cur.close()
-#         conn.close()
-
-# Still adjusting function
 @router.post("/queue/add")
 async def add_to_queue(item: QueueItem):
     queue.append(item.model_dump())
+    return {"message": "Client added to queue"}
+
+@router.post("/queue/add_client")
+async def add_to_queue(item: QueueItem):
+    client = item.model_dump()
+    queue.append(client)
     return {"message": "Client added to queue"}
 
 @router.post("/start_service")
