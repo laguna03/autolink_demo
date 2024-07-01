@@ -1,5 +1,6 @@
 from datetime import date, datetime
 from pydantic import BaseModel
+from typing import Optional
 from uuid import UUID
 
 
@@ -16,3 +17,8 @@ class ClientResponse(BaseModel):
     email: str
     phone: str
 
+class ClientInfo(BaseModel):
+    first_name: str
+    last_name: str
+    license_plate: str
+    client_id: Optional[str] = None
