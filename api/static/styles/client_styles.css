@@ -68,7 +68,7 @@ input[type="text"], input[type="email"] {
     width: 100%;
 }
 
-button {
+.button-container {
     background-color: #0000ff;
     color: white;
     padding: 15px 30px; /* Increased the padding */
